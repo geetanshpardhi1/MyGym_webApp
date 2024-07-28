@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+import datetime
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -48,3 +49,39 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+class MemberProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
+    gender = models.CharField(max_length=10, choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other')], blank=True)
+    phone_number = models.CharField(max_length=15, blank=True)
+    address = models.TextField(max_length=500, blank=True)
+    register_date = models.DateField(auto_now_add=True)
+    membership_start_date = models.DateField(null=True, blank=True)
+    membership_end_date = models.DateField(null=True, blank=True)
+    membership_type = models.CharField(max_length=50, blank=True)
+
+    def __str__(self):
+        return f"{self.user.email} - Member Profile"
+
+    @property
+    def membership_days_left(self):
+        if self.membership_end_date:
+            return (self.membership_end_date - datetime.date.today()).days
+        return 0
+
+class TrainerProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
+    gender = models.CharField(max_length=10, choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other')], blank=True)
+    phone_number = models.CharField(max_length=15, blank=True)
+    address = models.TextField(max_length=500, blank=True)
+    register_date = models.DateField(auto_now_add=True)
+    certification_details = models.TextField(max_length=500, blank=True)
+    specialization = models.CharField(max_length=100, blank=True)
+    experience_years = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.user.email} - Trainer Profile"
