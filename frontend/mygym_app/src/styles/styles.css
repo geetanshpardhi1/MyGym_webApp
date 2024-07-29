@@ -12,7 +12,7 @@
 }
 
 
-.section__container {
+/* .section__container {
   max-width: var(--max-width);
   margin: auto;
   padding: 5rem 1rem;
@@ -28,7 +28,7 @@
 
 .section__description {
   color: var(--text-light);
-}
+} */
 
 .btn {
   padding: 0.75rem 1.5rem;
@@ -178,7 +178,7 @@ nav {
   margin-bottom: 2rem;
   color: var(--extra-light);
 } */
-
+/* 
 .about__header {
   text-align: center;
   display: grid;
@@ -236,7 +236,7 @@ nav {
 
 .about__card p {
   color: var(--text-light);
-}
+} */
 
 .session {
   display: grid;
@@ -685,7 +685,7 @@ nav {
     grid-column: 2/3;
   } */
 
-  .about__header {
+  /* .about__header {
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
     align-items: center;
@@ -702,7 +702,7 @@ nav {
 
   .about__grid {
     grid-template-columns: repeat(3, 1fr);
-  }
+  } */
 
   .session {
     grid-template-columns: repeat(2, 1fr);
