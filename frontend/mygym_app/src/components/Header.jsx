@@ -12,12 +12,12 @@ const Header = () => {
     setMenuOpen(!menuOpen);
   };
 
-  // Close menu on navigation
+
   useEffect(() => {
     setMenuOpen(false);
   }, [location]);
 
-  // Close menu when clicking outside or scrolling
+  
   useEffect(() => {
     const handleClickOutsideOrScroll = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
