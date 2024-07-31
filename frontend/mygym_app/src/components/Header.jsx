@@ -1,22 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import logo from "../assets/logo.png";
 import styles from "../styles/Header.module.css";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+  const location = useLocation();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  // Close menu on navigation
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location]);
+
+  // Close menu when clicking outside or scrolling
+  useEffect(() => {
+    const handleClickOutsideOrScroll = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutsideOrScroll);
+    document.addEventListener('scroll', handleClickOutsideOrScroll);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutsideOrScroll);
+      document.removeEventListener('scroll', handleClickOutsideOrScroll);
+    };
+  }, []);
 
   return (
     <nav className={styles.nav}>
       <div className={styles.nav__bar}>
         <div className={styles.nav__header}>
           <div className={styles.nav__logo}>
-            <a href="#">
+            <Link to="/">
               <img className={styles.logo} src={logo} alt="logo" />
-            </a>
+            </Link>
           </div>
           <div
             className={styles.nav__menu__btn}
@@ -29,21 +54,22 @@ const Header = () => {
         <ul
           className={`${styles.nav__links} ${menuOpen ? styles.open : ""}`}
           id="nav-links"
+          ref={menuRef}
         >
           <li>
-            <a href="#home">HOME</a>
+            <Link to="/">HOME</Link>
           </li>
           <li>
-            <a href="#about">ABOUT</a>
+            <Link to="#about">ABOUT</Link>
           </li>
           <li>
-            <a href="#client">CLIENT</a>
+            <Link to="#">CLIENT</Link>
           </li>
           <li>
-            <a href="#contact">CONTACT US</a>
+            <Link to="#c">CONTACT US</Link>
           </li>
           <li>
-            <a href="#contact">LOGIN</a>
+            <Link to="/login-register">LOGIN</Link>
           </li>
         </ul>
       </div>
