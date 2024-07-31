@@ -1,25 +1,24 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
-
-// Import your images
+import { Pagination } from 'swiper/modules'
+import styles from "../styles/Client.module.css"
 import client1 from "../assets/client-1.jpg";
 import client2 from "../assets/client-2.jpg";
 import client3 from "../assets/client-3.jpg";
 
 const Clients = () => {
   return (
-    <section className="section__container client__container" id="client">
-      <h2 className="section__header">OUR TESTIMONIALS</h2>
+    <section className={`${styles.section__container} ${styles.client__container}`} id="client">
+      <h2 className={styles.section__header}>OUR TESTIMONIALS</h2>
       <Swiper
         modules={[Pagination]}
         pagination={{ clickable: true }}
         spaceBetween={50}
         slidesPerView={1}
-        className="swiper"
+        className={styles.swiper}
       >
         <SwiperSlide>
-          <div className="client__card">
+          <div className={styles.client__card}>
             <img src={client1} alt="client" />
             <div>
               <i className="ri-double-quotes-r"></i>
@@ -34,7 +33,7 @@ const Clients = () => {
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="client__card">
+          <div className={styles.client__card}>
             <img src={client2} alt="client" />
             <div>
               <i className="ri-double-quotes-r"></i>
@@ -49,7 +48,7 @@ const Clients = () => {
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="client__card">
+          <div className={styles.client__card}>
             <img src={client3} alt="client" />
             <div>
               <i className="ri-double-quotes-r"></i>

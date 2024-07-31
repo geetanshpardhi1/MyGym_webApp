@@ -8,21 +8,22 @@ import img7 from "../assets/gallery-7.jpg"
 import img8 from "../assets/gallery-8.jpg"
 import img9 from "../assets/gallery-9.jpg"
 import logo from "../assets/logo.png"
+import styles from "../styles/Footer.module.css"
 const Footer = () => {
   return (
-    <footer className="footer" id="contact">
-      <div className="section__container footer__container">
-        <div className="footer__col">
-          <div className="footer__logo">
+    <footer className={styles.footer} id="contact">
+      <div className={`${styles.section__container}  ${styles.footer__container}`}>
+        <div className={styles.footer__col}>
+          <div className={styles.footer__logo}>
             <a href="#">
-              <img className="logo" src={logo} alt="logo" />
+              <img className={styles.logo} src={logo} alt="logo" />
             </a>
           </div>
           <p>
             Welcome to MY-GYM, where we believe that every journey to
             fitness is unique and empowering.
           </p>
-          <ul className="footer__links">
+          <ul className={styles.footer__links}>
             <li>
               <a href="#">
                 <span>
@@ -51,9 +52,9 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-        <div className="footer__col">
+        <div className={styles.footer__col}>
           <h4>GALLERY</h4>
-          <div className="gallery__grid">
+          <div className={styles.gallery__grid}>
             <img src={img1} alt="gallery" />
             <img src={img2} alt="gallery" />
             <img src={img3} alt="gallery" />
@@ -65,7 +66,7 @@ const Footer = () => {
             <img src={img9 } alt="gallery" />
           </div>
         </div>
-        <div className="footer__col">
+        <div className={styles.footer__col}>
           <h4>NEWSLETTER</h4>
           <p>
             Don't miss out on the latest news and offers - sign up today and
@@ -73,9 +74,9 @@ const Footer = () => {
           </p>
           <form action="/">
             <input type="text" placeholder="Enter Email" />
-            <button className="btn btn__primary">SEND</button>
+            <button className={`${styles.btn}  ${styles.btn__primary}`}>SEND</button>
           </form>
-          <div className="footer__socials">
+          <div className={styles.footer__socials}>
             <a href="#">
               <i className="ri-facebook-fill"></i>
             </a>
@@ -88,7 +89,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="footer__bar">
+      <div className={styles.footer__bar}>
         Copyright © 2024 Web Design Mastery. All rights reserved.
       </div>
     </footer>

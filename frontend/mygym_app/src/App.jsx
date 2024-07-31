@@ -6,16 +6,15 @@ import Hero from './components/Hero';
 import Session from './components/Session';
 import Membership from './components/Membership';
 import Clients from './components/Clients';
-import './styles/styles.css';
-import SignInSignUp from './components/SignInSignUp';
+// import "./styles/styles.css"
+// import SignInSignUp from './components/SignInSignUp';
 
 function App(){
 
   return (
     <>
       <Header />
-      {/* <SignInSignUp /> */}
-      <Hero />
+     <Hero />
       <About />
       <Membership />
       <Session />
