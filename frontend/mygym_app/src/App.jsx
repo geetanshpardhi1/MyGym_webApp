@@ -7,19 +7,20 @@ import Session from './components/Session';
 import Membership from './components/Membership';
 import Clients from './components/Clients';
 // import "./styles/styles.css"
-// import SignInSignUp from './components/SignInSignUp';
+import SignInSignUp from './components/SignInSignUp';
 
 function App(){
 
   return (
     <>
       <Header />
-     <Hero />
+      <SignInSignUp />
+     {/* <Hero />
       <About />
       <Membership />
       <Session />
       <Clients />
-      <Footer />
+      <Footer /> */}
     </>
   );
 }
