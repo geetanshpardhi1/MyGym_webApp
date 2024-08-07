@@ -85,17 +85,30 @@ class TrainerProfile(models.Model):
     
 class Membership(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    MEMBERSHIP_CHOICES = [
+    MEMBERSHIP_PLAN_CHOICES = [
         ('Base', 'Base'),
         ('Premium', 'Premium'),
         ('Gold', 'Gold')
     ]
-    membership_type = models.CharField(max_length=50, choices=MEMBERSHIP_CHOICES)
-    start_date = models.DateField()
-    end_date = models.DateField()
+    DURATION_CHOICES = [
+        ('Monthly', 30),
+        ('Quarterly', 90),
+        ('Yearly', 365)
+    ]
+    membership_type = models.CharField(max_length=50, choices=MEMBERSHIP_PLAN_CHOICES)
+    duration = models.CharField(max_length=50, choices=DURATION_CHOICES, default='Monthly')
+    start_date = models.DateField(editable=False, blank=True, null=True)
+    end_date = models.DateField(editable=False, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.start_date:
+            self.start_date = datetime.date.today() + datetime.timedelta(days=1)
+        duration_days = dict(self.DURATION_CHOICES)[self.duration]
+        self.end_date = self.start_date + datetime.timedelta(days=duration_days)
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.user.email} - {self.membership_type}"
+        return f"{self.user.email} - {self.membership_type} ({self.duration})"
 
     @property
     def days_left(self):
