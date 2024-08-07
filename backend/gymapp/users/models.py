@@ -58,9 +58,6 @@ class MemberProfile(models.Model):
     phone_number = models.CharField(max_length=15, blank=True)
     address = models.TextField(max_length=500, blank=True)
     register_date = models.DateField(auto_now_add=True)
-    membership_start_date = models.DateField(null=True, blank=True)
-    membership_end_date = models.DateField(null=True, blank=True)
-    membership_type = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         return f"{self.user.email} - Member Profile"
@@ -85,3 +82,23 @@ class TrainerProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.email} - Trainer Profile"
+    
+class Membership(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    MEMBERSHIP_CHOICES = [
+        ('Base', 'Base'),
+        ('Premium', 'Premium'),
+        ('Gold', 'Gold')
+    ]
+    membership_type = models.CharField(max_length=50, choices=MEMBERSHIP_CHOICES)
+    start_date = models.DateField()
+    end_date = models.DateField()
+
+    def __str__(self):
+        return f"{self.user.email} - {self.membership_type}"
+
+    @property
+    def days_left(self):
+        if self.end_date:
+            return (self.end_date - datetime.date.today()).days
+        return 0
