@@ -6,6 +6,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.utils.encoding import smart_str,force_bytes,DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from rest_framework import serializers
+from .models import Membership
+
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, help_text='Password', style={'input_type': 'password'})
@@ -121,3 +124,21 @@ class UserPasswordResetSerializer(serializers.Serializer):
         except DjangoUnicodeDecodeError as identifier:
             PasswordResetTokenGenerator.check_token(user,token)
             raise serializers.ValidationError("Token is corrupted or expired")
+        
+class MembershipSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(max_length=150, write_only=True)
+    
+    class Meta:
+        model = Membership
+        fields = ['username', 'membership_type', 'duration', 'start_date', 'end_date']
+        read_only_fields = ['start_date', 'end_date']
+
+    def create(self, validated_data):
+       
+        username = validated_data.pop('username', None)
+        if username:
+           user = User.objects.get(username=username)
+        else:
+            raise serializers.ValidationError("User email or username must be provided.")
+        
+        return Membership.objects.create(user=user, **validated_data)

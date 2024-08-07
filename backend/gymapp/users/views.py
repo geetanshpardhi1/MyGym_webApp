@@ -1,7 +1,7 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
-from .models import User
-from .serializers import UserRegistrationSerializer
+from .models import User,Membership
+from .serializers import UserRegistrationSerializer,MembershipSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from .renderers import UserRenderer
 from rest_framework.permissions import IsAuthenticated
@@ -73,3 +73,9 @@ class UserPasswordResetView(APIView):
             return Response({'msg':'Password Changed'},status=status.HTTP_200_OK)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     
+class MembershipCreateView(generics.CreateAPIView):
+    queryset = Membership.objects.all()
+    serializer_class = MembershipSerializer
+
+    def perform_create(self, serializer):
+        serializer.save()
