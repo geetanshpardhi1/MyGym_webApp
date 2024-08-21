@@ -4,7 +4,7 @@ import { MdSpaceDashboard } from "react-icons/md";
 const MemberDashboardHeader = ({ darkmode, toggleDarkMode, toggleSidebar }) => {
   return (
     <nav
-      className="fixed p-0 top-0 z-50 w-full bg-white border-b border-grey-200 dark:bg-gray-800
+      className="fixed p-1 top-0 z-50 w-full bg-white border-b border-grey-200 dark:bg-gray-800
   dark:border-gray-700"
     >
       <div className="px-3 py-3 lg:px-5 lg:pl-3 ">

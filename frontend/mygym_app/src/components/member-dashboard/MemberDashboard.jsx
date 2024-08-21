@@ -6,6 +6,8 @@ import MemberDashboardMain from "./MemberDashboardMain";
 import MemberContent from "./MemberContent";
 import MemberProfile from "./MemberProfile";
 import MemberStats from "./MemberStats";
+import Team from "./TeamSection/Team";
+import Event from "./EventsSection/Event";
 const MemberDashboard = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -25,11 +27,14 @@ const MemberDashboard = () => {
         toggleSidebar={toggleSideBar}
       />
       <MemberDashboardSidebar isSidebarOpen={isSidebarOpen} />
-      
+
       <MemberDashboardMain>
         <MemberContent>
-          <MemberStats  darkMode={darkMode}/>
-          <div className="flex flex-col gap-3 lg:flex-row"></div>
+          <MemberStats darkMode={darkMode} />
+          <div className="flex flex-col gap-3 lg:flex-row">
+            <Team />
+            <Event />
+          </div>
         </MemberContent>
         <MemberProfile />
       </MemberDashboardMain>
