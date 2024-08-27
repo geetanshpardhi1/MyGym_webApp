@@ -1,4 +1,5 @@
 from rest_framework import generics, status
+from django.conf import settings
 from rest_framework.response import Response
 from .models import User,Membership
 from .serializers import UserRegistrationSerializer,MembershipSerializer
@@ -17,21 +18,57 @@ class UserRegistrationView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        
         refresh = RefreshToken.for_user(user)
+        
         response_data = {
-            'refresh': str(refresh),
             'access': str(refresh.access_token),
-            'username': user.username,
+            'user': {
+                    'username': user.username,
+                    'email': user.email,
+                    'is_trainer': user.is_trainer,
+                    'is_member': user.is_member,
+                }
         }
-        return Response(response_data, status=status.HTTP_201_CREATED)
+        
+        response = Response(response_data, status=status.HTTP_201_CREATED)
+        
+        # refresh token as an HttpOnly cookie
+        response.set_cookie(
+            key='refresh_token',
+            value=str(refresh),
+            httponly=True,
+            secure=settings.SECURE_COOKIE, 
+            samesite='Lax' 
+        )
+        return response
     
 class CustomLoginView(APIView):
     renderer_classes = [UserRenderer]
+
     def post(self, request, *args, **kwargs):
         serializer = CustomLoginSerializer(data=request.data)
-        if serializer.is_valid():
-            return Response(serializer.validated_data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        validated_data = serializer.validated_data
+        
+        access = validated_data.get('access')
+        refresh = validated_data.get('refresh')
+        user = validated_data.get('user')
+
+        response = Response({
+            'access': access,
+            'user': user
+        }, status=status.HTTP_200_OK)
+
+        response.set_cookie(
+            key='refresh_token',
+            value=str(refresh),
+            httponly=True,
+            secure=settings.SECURE_COOKIE,  
+            samesite='Lax' 
+        )
+
+        return response
     
 class UserChangePasswordView(APIView):
     renderer_classes = [UserRenderer]

@@ -22,6 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-d7i$d)5(@qh!c^2rlgvpg)@&%4v^_&4v8$$cc&p1ko#yo7=^-!'
 
+
+SECURE_COOKIE = False
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -90,7 +93,6 @@ DATABASES = {
         'NAME': 'fitzone',
         'USER':'root',
         'PASSWORD': 'geetansh75520123',
-        # 'PASSWORD': '0206vigor@',
         'HOST':'127.0.0.1',
         'PORT':'3306'
     }
@@ -132,6 +134,8 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 
 }
+
+
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",

@@ -55,6 +55,12 @@ class CustomLoginSerializer(serializers.Serializer):
         return {
             'refresh': str(refresh),
             'access': str(refresh.access_token),
+            'user': {
+                    'username': user.username,
+                    'email': user.email,
+                    'is_trainer': user.is_trainer,
+                    'is_member': user.is_member,
+                }
         }
         
 class UserChangePasswordSerializer(serializers.Serializer):
