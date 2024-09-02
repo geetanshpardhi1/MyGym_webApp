@@ -135,14 +135,10 @@ SIMPLE_JWT = {
 
 }
 
-
+CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "http://localhost:6379",
-    "https://sub.example.com",
-    "http://localhost:8080",
-    "http://127.0.0.1:9000",
 ]
 
 # Internationalization

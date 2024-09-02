@@ -8,7 +8,6 @@ from .renderers import UserRenderer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from .serializers import CustomLoginSerializer,UserChangePasswordSerializer,SendPasswordResetEmailSerializer,UserPasswordResetSerializer
-
 class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
     renderer_classes = [UserRenderer]
