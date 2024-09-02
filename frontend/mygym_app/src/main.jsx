@@ -7,6 +7,7 @@ import SignInSignUp from "./components/SignInSignUp.jsx";
 import MemberDashboard from "./components/member-dashboard/MemberDashboard.jsx";
 import { Provider } from "react-redux";
 import { store } from "./store/store.js";
+import PrivateRoutes from "./utils/ProtectedRoutes.jsx";
 
 
 const router = createBrowserRouter([
@@ -20,7 +21,10 @@ const router = createBrowserRouter([
   },
   {
     path: "/member-dashboard",
-    element: <MemberDashboard />,
+    element: <PrivateRoutes />, // Protect this route
+    children: [
+      { path: "/member-dashboard", element: <MemberDashboard /> },
+    ],
   },
 ]);
 

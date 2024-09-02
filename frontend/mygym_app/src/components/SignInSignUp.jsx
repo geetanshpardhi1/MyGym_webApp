@@ -3,6 +3,7 @@ import styles from "../styles/SignInSignUp.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setCredentials } from "../store/features/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const SignInSignUp = () => {
   // sliding functions
@@ -24,6 +25,7 @@ const SignInSignUp = () => {
   const [is_trainer, setTrainer] = useState("");
   const [is_member, setMember] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // LOGIN
   const handleLogin = async (e) => {
@@ -43,7 +45,9 @@ const SignInSignUp = () => {
           user: response.data.user,
           accessToken: response.data.access,
         })
+        
       );
+      navigate("/member-dashboard")
     } catch (err) {
       console.error("Login failed:", err);
       console.log(err.response.data.errors.detail);
@@ -72,6 +76,7 @@ const SignInSignUp = () => {
           accessToken: response.data.access,
         })
       );
+      navigate("/member-dashboard")
     } catch (err) {
       console.error("Login failed:", err);
       console.log(err.response.data.errors);

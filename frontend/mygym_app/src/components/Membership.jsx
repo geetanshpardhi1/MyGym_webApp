@@ -1,8 +1,12 @@
 import { useEffect } from "react";
 import styles from "../styles/Membership.module.css";
 import ScrollReveal from "scrollreveal";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const Membership = () => {
+  
+
   useEffect(() => {
     const scrollRevealOptions = {
       distance: "50px",
@@ -19,6 +23,35 @@ const Membership = () => {
       });
     });
   }, []);
+
+  // TESTING CODE FOR PURCHASING MEMBERSHIP
+  // const accessToken = useSelector((state) => state.auth.accessToken);
+  // const username = useSelector((state) => state.auth.user.username);
+
+  // const handleBuyNow = async (membershipType) => {
+  //   const payload = {
+  //     username,      //username is mandatory not user email 
+  //     membership_type: membershipType,
+  //     duration: "Monthly",
+  //   };
+
+  //   try {
+  //     const response = await axios.post(
+  //       "http://127.0.0.1:8000/users/create-membership/",
+  //       payload,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`, 
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     console.log("Membership created:", response.data);
+  //   } catch (error) {
+  //     console.error("Error creating membership:", error);
+  //   }
+  // };
+
   return (
     <section className={styles.membership}>
       <div
@@ -69,7 +102,10 @@ const Membership = () => {
             <h3>
               <sup>$</sup>30<span>/month</span>
             </h3>
-            <button className={`${styles.btn} ${styles.btn__primary}`}>
+            <button
+              className={`${styles.btn} ${styles.btn__primary}`}
+              onClick={()=>handleBuyNow('Base')}
+            >
               BUY NOW
             </button>
           </div>
@@ -116,7 +152,10 @@ const Membership = () => {
             <h3>
               <sup>$</sup>45<span>/month</span>
             </h3>
-            <button className={`${styles.btn} ${styles.btn__primary}`}>
+            <button
+              className={`${styles.btn} ${styles.btn__primary}`}
+              onClick={()=>handleBuyNow('Premium')}
+            >
               BUY NOW
             </button>
           </div>
@@ -163,7 +202,10 @@ const Membership = () => {
             <h3>
               <sup>$</sup>60<span>/month</span>
             </h3>
-            <button className={`${styles.btn} ${styles.btn__primary}`}>
+            <button
+              className={`${styles.btn} ${styles.btn__primary}`}
+              onClick={()=>handleBuyNow('Gold')}
+            >
               BUY NOW
             </button>
           </div>
