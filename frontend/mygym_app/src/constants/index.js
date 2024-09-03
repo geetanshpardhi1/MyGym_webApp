@@ -57,23 +57,19 @@ export const links = [
     icon: FaListAlt,
     text: "Products",
   },
+  
   {
-    href: "#",
-    icon: IoIosLogIn,
-    text: "Sign In",
-  },
-  {
-    href: "#",
+    href: "/logout",
     icon: IoIosLogOut,
-    text: "Sign Up",
+    text: "Logout",
   },
 ];
 
 export const empolyeesData = [
   {
-    title: "Total Empolyees",
+    title: "Calorie Budget",
     icon: IoIosPerson,
-    count: 200,
+    count: "2000 " +"Kcal",
     bgColor: "bg-gray-100",
   },
   {

@@ -21,7 +21,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/member-dashboard",
-    element: <PrivateRoutes />, // Protect this route
+    element: <PrivateRoutes />, 
     children: [
       { path: "/member-dashboard", element: <MemberDashboard /> },
     ],

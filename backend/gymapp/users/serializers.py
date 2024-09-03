@@ -7,7 +7,7 @@ from django.utils.encoding import smart_str,force_bytes,DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from rest_framework import serializers
-from .models import Membership
+from .models import Membership,WorkoutPlan
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -148,3 +148,10 @@ class MembershipSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("User email or username must be provided.")
         
         return Membership.objects.create(user=user, **validated_data)
+
+
+class WorkoutPlanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WorkoutPlan
+        fields = ['id', 'day_of_week','duration', 'title', 'description', 'intensity']
+        

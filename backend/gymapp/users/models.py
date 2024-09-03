@@ -115,3 +115,34 @@ class Membership(models.Model):
         if self.end_date:
             return (self.end_date - datetime.date.today()).days
         return 0
+
+
+class WorkoutPlan(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    # Day of the week
+    DAY_CHOICES = [
+        ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'),
+        ('Friday', 'Friday'),
+        ('Saturday', 'Saturday'),
+        ('Sunday', 'Sunday'),
+    ]
+    day_of_week = models.CharField(max_length=10, choices=DAY_CHOICES)
+    title = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+    duration = models.IntegerField()
+    INTENSITY_CHOICES = [
+        ('Low', 'Low'),
+        ('Moderate', 'Moderate'),
+        ('High', 'High'),
+    ]
+    intensity = models.CharField(max_length=10, choices=INTENSITY_CHOICES, blank=True, null=True)
+    
+    def __str__(self):
+        return f'{self.user.username} - {self.day_of_week} - {self.title}'
+    
+    class Meta:
+        unique_together = ('user', 'day_of_week')

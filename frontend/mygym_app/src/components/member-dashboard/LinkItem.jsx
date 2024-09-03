@@ -1,10 +1,22 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../store/features/authSlice";
 
 const LinkItem = ({ href, icon: Icon, text, badge }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login-register");
+  };
+
+
   return (
     <li>
       <a
-        href="{href}"
+        onClick={handleLogout}
         className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white 
       hover:bg-gray-100 dark:hover:bg-gray-700"
       >
