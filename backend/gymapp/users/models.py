@@ -146,3 +146,13 @@ class WorkoutPlan(models.Model):
     
     class Meta:
         unique_together = ('user', 'day_of_week')
+        
+class Goal(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    calorie_goal = models.PositiveIntegerField(default=1500) 
+    daily_steps_goal = models.PositiveIntegerField(default=5000) 
+    sleep_goal = models.DecimalField(max_digits=4, decimal_places=2, default=8.00)
+    water_intake_goal = models.DecimalField(max_digits=4, decimal_places=2, default=3.00) 
+
+    def __str__(self):
+        return f"{self.user.username}'s Goals"

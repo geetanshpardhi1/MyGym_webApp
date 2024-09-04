@@ -2,8 +2,8 @@ from rest_framework import generics, status
 from django.conf import settings
 from rest_framework.decorators import api_view, permission_classes,renderer_classes
 from rest_framework.response import Response
-from .models import User,Membership,WorkoutPlan
-from .serializers import UserRegistrationSerializer,MembershipSerializer,WorkoutPlanSerializer
+from .models import User,Membership,WorkoutPlan,Goal
+from .serializers import UserRegistrationSerializer,MembershipSerializer,WorkoutPlanSerializer,GoalSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from .renderers import UserRenderer
 from rest_framework.permissions import IsAuthenticated
@@ -157,3 +157,23 @@ class MembershipDetailView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Membership.DoesNotExist:
             return Response({"No active membership found."}, status=status.HTTP_404_NOT_FOUND)
+        
+@api_view(['GET', 'POST'])
+@renderer_classes([UserRenderer])
+@permission_classes([IsAuthenticated])
+def goal_detail_update(request):
+    try:
+        goal = Goal.objects.get(user=request.user)
+    except Goal.DoesNotExist:
+        return Response({"Goal not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = GoalSerializer(goal)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = GoalSerializer(goal, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

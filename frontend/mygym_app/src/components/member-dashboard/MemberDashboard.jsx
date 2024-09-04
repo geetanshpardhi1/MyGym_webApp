@@ -8,10 +8,11 @@ import MemberContent from "./MemberContent";
 import MemberProfile from "./MemberProfile";
 import MemberStats from "./MemberStats";
 import Team from "./TeamSection/Team";
-import Events from "./UpcomingWorkout/Events";
 import axios from "axios";
 import { setWorkoutData } from "../../store/features/wotkoutdataSlice";
 import UpcomingWorkouts from "./UpcomingWorkout/UpcomingWorkouts";
+import { setMembershipDetails } from "../../store/features/membershipSlice";
+import Loading from "../Loading";
 
 const MemberDashboard = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -27,6 +28,7 @@ const MemberDashboard = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  //fucntion to fetch workout plans from backend and set it to state
   useEffect(() => {
     const fetchWorkoutData = async () => {
       try {
@@ -42,6 +44,28 @@ const MemberDashboard = () => {
         dispatch(setWorkoutData(response.data));
       } catch (error) {
         console.error("Error fetching workout plans:", error);
+      }
+    };
+
+    fetchWorkoutData();
+  }, [dispatch, accessToken]);
+
+  //function to fetch membership details and set it to redux state
+  useEffect(() => {
+    const fetchWorkoutData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/users/membership/",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        dispatch(setMembershipDetails(response.data));
+      } catch (error) {
+        console.error("Error fetching membership details:", error);
       }
     };
 

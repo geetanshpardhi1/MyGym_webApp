@@ -7,7 +7,7 @@ from django.utils.encoding import smart_str,force_bytes,DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from rest_framework import serializers
-from .models import Membership,WorkoutPlan
+from .models import Membership,WorkoutPlan,Goal
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -155,3 +155,9 @@ class WorkoutPlanSerializer(serializers.ModelSerializer):
         model = WorkoutPlan
         fields = ['id', 'day_of_week','duration', 'title', 'description', 'intensity']
         
+class GoalSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Goal
+        fields = ['id','calorie_goal', 'daily_steps_goal', 'sleep_goal', 'water_intake_goal']
+        read_only_fields = ['id']
