@@ -146,3 +146,14 @@ def user_workout_plans(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+class MembershipDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+    renderer_classes =[UserRenderer]
+    def get(self, request):
+        try:
+            membership = Membership.objects.get(user=request.user)
+            serializer = MembershipSerializer(membership)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Membership.DoesNotExist:
+            return Response({"No active membership found."}, status=status.HTTP_404_NOT_FOUND)

@@ -136,7 +136,7 @@ class MembershipSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Membership
-        fields = ['username', 'membership_type', 'duration', 'start_date', 'end_date']
+        fields = ['username', 'membership_type', 'duration', 'start_date', 'end_date','days_left']
         read_only_fields = ['start_date', 'end_date']
 
     def create(self, validated_data):

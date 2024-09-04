@@ -11,6 +11,7 @@ import Team from "./TeamSection/Team";
 import Events from "./UpcomingWorkout/Events";
 import axios from "axios";
 import { setWorkoutData } from "../../store/features/wotkoutdataSlice";
+import UpcomingWorkouts from "./UpcomingWorkout/UpcomingWorkouts";
 
 const MemberDashboard = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -61,7 +62,7 @@ const MemberDashboard = () => {
           <MemberStats darkMode={darkMode} />
           <div className="flex flex-col gap-3 lg:flex-row">
             <Team />
-            <Events />
+            <UpcomingWorkouts />
           </div>
         </MemberContent>
 

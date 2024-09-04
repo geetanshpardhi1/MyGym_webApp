@@ -10,7 +10,7 @@ const MemberStats = ({ darkMode }) => {
       className="flex flex-col md:flex-row gap-5 
     "
     >
-      <div className="flex flex-col gap-4 h-full">
+      <div className="flex flex-col gap-5 h-full">
         <div className="bg-white p-6 rounded-2xl flex items-center gap-4 dark:bg-gray-600 dark:text-gray-400">
           <span
             className={`bg-red-300 px-3 py-6 text-2xl rounded-2xl dark:bg-gray-500 `}
@@ -50,6 +50,7 @@ const MemberStats = ({ darkMode }) => {
             <p className="font-bold">Daily Steps</p>
           </div>
         </div>
+        
       </div>
       <ActivityGraph darkMode={darkMode} />
     </div>
