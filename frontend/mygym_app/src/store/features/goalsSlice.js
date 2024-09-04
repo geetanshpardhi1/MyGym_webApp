@@ -8,12 +8,15 @@ const goalsSlice = createSlice({
   name: "goals",
   initialState,
   reducers: {
-    setGoals : (state, action) => {
+    setGoals: (state, action) => {
       state.goalsData = action.payload;
+    },
+    clearGoals: (state) => {
+      state.goalsData = null;
     },
   },
 });
 
-export const { setGoals } = goalsSlice.actions;
+export const { setGoals, clearGoals } = goalsSlice.actions;
 
 export default goalsSlice.reducer;

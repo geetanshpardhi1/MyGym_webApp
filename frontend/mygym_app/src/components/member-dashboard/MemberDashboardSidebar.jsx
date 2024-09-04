@@ -5,6 +5,9 @@ import { logout } from "../../store/features/authSlice";
 import { IoIosLogOut } from "react-icons/io";
 import { CiCalendar } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
+import { clearMembershipDetails } from "../../store/features/membershipSlice";
+import { clearWorkoutData } from "../../store/features/wotkoutdataSlice";
+import { clearGoals } from "../../store/features/goalsSlice";
 
 const MemberDashboardSidebar = ({ isSidebarOpen }) => {
   const dispatch = useDispatch();
@@ -12,6 +15,9 @@ const MemberDashboardSidebar = ({ isSidebarOpen }) => {
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(clearMembershipDetails());
+    dispatch(clearWorkoutData());
+    dispatch(clearGoals());
     navigate("/");
   };
 
@@ -40,7 +46,7 @@ const MemberDashboardSidebar = ({ isSidebarOpen }) => {
               className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white 
       hover:bg-gray-200 dark:hover:bg-gray-700"
             >
-              <IoSettingsOutline className="mr-2"/>
+              <IoSettingsOutline className="mr-2" />
               <span className="flex-1 me-3 ">Settings</span>
             </a>
           </li>

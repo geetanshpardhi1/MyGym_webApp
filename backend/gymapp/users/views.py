@@ -110,12 +110,36 @@ class UserPasswordResetView(APIView):
             return Response({'msg':'Password Changed'},status=status.HTTP_200_OK)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     
-class MembershipCreateView(generics.CreateAPIView):
-    queryset = Membership.objects.all()
-    serializer_class = MembershipSerializer
+class MembershipCreateOrUpdateView(APIView):
+    permission_classes = [IsAuthenticated]
 
-    def perform_create(self, serializer):
-        serializer.save()
+    def post(self, request):
+        try:
+            user = request.user
+            membership, created = Membership.objects.get_or_create(user=user)
+            serializer = MembershipSerializer(membership, data=request.data)
+            
+            if serializer.is_valid():
+                serializer.save()
+                status_code = status.HTTP_201_CREATED if created else status.HTTP_200_OK
+                return Response(serializer.data, status=status_code)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        
+class MembershipDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+    renderer_classes =[UserRenderer]
+    def get(self, request):
+        try:
+            membership = Membership.objects.get(user=request.user)
+            serializer = MembershipSerializer(membership)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Membership.DoesNotExist:
+            return Response({"No active membership found."}, status=status.HTTP_404_NOT_FOUND)        
+        
         
 @api_view(['GET', 'POST'])
 @renderer_classes([UserRenderer])
@@ -147,16 +171,7 @@ def user_workout_plans(request):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-class MembershipDetailView(APIView):
-    permission_classes = [IsAuthenticated]
-    renderer_classes =[UserRenderer]
-    def get(self, request):
-        try:
-            membership = Membership.objects.get(user=request.user)
-            serializer = MembershipSerializer(membership)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except Membership.DoesNotExist:
-            return Response({"No active membership found."}, status=status.HTTP_404_NOT_FOUND)
+
         
 @api_view(['GET', 'POST'])
 @renderer_classes([UserRenderer])

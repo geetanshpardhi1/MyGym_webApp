@@ -11,9 +11,12 @@ const workoutSlice = createSlice({
     setWorkoutData: (state, action) => {
       state.workoutData = action.payload;
     },
+    clearWorkoutData: (state) => {
+      state.workoutData = null;
+    },
   },
 });
 
-export const { setWorkoutData } = workoutSlice.actions;
+export const { setWorkoutData, clearWorkoutData } = workoutSlice.actions;
 
 export default workoutSlice.reducer;

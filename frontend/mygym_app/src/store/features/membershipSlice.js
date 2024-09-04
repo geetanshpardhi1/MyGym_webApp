@@ -8,12 +8,16 @@ const membershipSlice = createSlice({
   name: "membership",
   initialState,
   reducers: {
-    setMembershipDetails : (state, action) => {
+    setMembershipDetails: (state, action) => {
       state.membershipData = action.payload;
+    },
+    clearMembershipDetails(state) {
+      state.membershipData = null;
     },
   },
 });
 
-export const { setMembershipDetails } = membershipSlice.actions;
+export const { setMembershipDetails, clearMembershipDetails } =
+  membershipSlice.actions;
 
 export default membershipSlice.reducer;

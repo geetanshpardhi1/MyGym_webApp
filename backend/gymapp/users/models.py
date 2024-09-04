@@ -85,36 +85,55 @@ class TrainerProfile(models.Model):
     
 class Membership(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    MEMBERSHIP_STATUS_CHOICES = [
+        ('Member', 'Member'),
+        ('Not A Member', 'Not A Member'),
+    ]
+    
     MEMBERSHIP_PLAN_CHOICES = [
         ('Base', 'Base'),
         ('Premium', 'Premium'),
         ('Gold', 'Gold')
     ]
+    
     DURATION_CHOICES = [
         ('Monthly', 30),
         ('Quarterly', 90),
         ('Yearly', 365)
     ]
-    membership_type = models.CharField(max_length=50, choices=MEMBERSHIP_PLAN_CHOICES)
-    duration = models.CharField(max_length=50, choices=DURATION_CHOICES, default='Monthly')
+    
+    membership_status = models.CharField(max_length=50, choices=MEMBERSHIP_STATUS_CHOICES, default='Not A Member')
+    membership_type = models.CharField(max_length=50, choices=MEMBERSHIP_PLAN_CHOICES, blank=True, null=True)
+    duration = models.CharField(max_length=50, choices=DURATION_CHOICES, blank=True, null=True)
     start_date = models.DateField(editable=False, blank=True, null=True)
     end_date = models.DateField(editable=False, blank=True, null=True)
+    days_left = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
-        if not self.start_date:
-            self.start_date = datetime.date.today() + datetime.timedelta(days=1)
-        duration_days = dict(self.DURATION_CHOICES)[self.duration]
-        self.end_date = self.start_date + datetime.timedelta(days=duration_days)
+        if self.membership_type and self.duration:
+          
+            if not self.start_date:
+                self.start_date = datetime.date.today() + datetime.timedelta(days=1)
+            duration_days = dict(self.DURATION_CHOICES)[self.duration]
+            self.end_date = self.start_date + datetime.timedelta(days=duration_days)
+            
+            self.membership_status = 'Member'
+            today = datetime.date.today()
+            if self.end_date > today:
+                self.days_left = (self.end_date - today).days
+            else:
+                self.days_left = 0
+        else:
+            self.membership_status = 'Not A Member'
+            self.start_date = None
+            self.end_date = None
+            self.days_left = 0
+
         super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.user.email} - {self.membership_type} ({self.duration})"
-
-    @property
-    def days_left(self):
-        if self.end_date:
-            return (self.end_date - datetime.date.today()).days
-        return 0
 
 
 class WorkoutPlan(models.Model):

@@ -82,7 +82,6 @@ const MemberDashboard = () => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        console.log(response.data)
         dispatch(setGoals(response.data));
       } catch (error) {
         console.error("Error fetching membership details:", error);

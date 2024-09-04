@@ -132,11 +132,10 @@ class UserPasswordResetSerializer(serializers.Serializer):
             raise serializers.ValidationError("Token is corrupted or expired")
         
 class MembershipSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(max_length=150, write_only=True)
     
     class Meta:
         model = Membership
-        fields = ['username', 'membership_type', 'duration', 'start_date', 'end_date','days_left']
+        fields = ['membership_status', 'membership_type', 'duration', 'start_date', 'end_date','days_left']
         read_only_fields = ['start_date', 'end_date']
 
     def create(self, validated_data):
