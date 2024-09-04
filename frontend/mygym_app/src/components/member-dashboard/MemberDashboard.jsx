@@ -13,6 +13,7 @@ import { setWorkoutData } from "../../store/features/wotkoutdataSlice";
 import UpcomingWorkouts from "./UpcomingWorkout/UpcomingWorkouts";
 import { setMembershipDetails } from "../../store/features/membershipSlice";
 import Loading from "../Loading";
+import { setGoals } from "../../store/features/goalsSlice";
 
 const MemberDashboard = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -52,7 +53,7 @@ const MemberDashboard = () => {
 
   //function to fetch membership details and set it to redux state
   useEffect(() => {
-    const fetchWorkoutData = async () => {
+    const fetchMembershipData = async () => {
       try {
         const response = await axios.get(
           "http://localhost:8000/users/membership/",
@@ -69,7 +70,26 @@ const MemberDashboard = () => {
       }
     };
 
-    fetchWorkoutData();
+    fetchMembershipData();
+  }, [dispatch, accessToken]);
+
+  //function to fetch goals of user and set it to redux state
+  useEffect(() => {
+    const fetchGoalsData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/users/goals/", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        console.log(response.data)
+        dispatch(setGoals(response.data));
+      } catch (error) {
+        console.error("Error fetching membership details:", error);
+      }
+    };
+
+    fetchGoalsData();
   }, [dispatch, accessToken]);
 
   return (

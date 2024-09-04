@@ -11,6 +11,7 @@ const MemberStats = ({ darkMode }) => {
   const membershipData = useSelector(
     (state) => state.membership.membershipData
   );
+  const goalsData = useSelector((state) => state.goals.goalsData);
 
   return (
     <div
@@ -20,41 +21,65 @@ const MemberStats = ({ darkMode }) => {
       <div className="flex flex-col gap-5 h-full">
         <div className="bg-white p-6 rounded-2xl flex items-center gap-4 dark:bg-gray-600 dark:text-gray-400">
           <span
-            className={`bg-red-300 px-3 py-6 text-2xl rounded-2xl dark:bg-gray-500 `}
+            className={`bg-red-300 px-3 py-6 text-2xl rounded-2xl dark:bg-gray-500`}
           >
             <FaFire />
           </span>
           <div>
-            <h2 className="text-xl">
-              <span className="text-2xl font-bold">2000</span>
-            </h2>
-            <p className="font-bold">Calorie Budget</p>
+            {goalsData ? (
+              <>
+                <h2 className="text-xl">
+                  <span className="text-2xl font-bold">
+                    {goalsData.calorie_goal}
+                  </span>
+                </h2>
+                <p className="font-bold">Calorie Budget</p>
+              </>
+            ) : (
+              <Loading />
+            )}
           </div>
         </div>
         <div className="bg-white p-6 rounded-2xl flex items-center gap-4 dark:bg-gray-600 dark:text-gray-400">
           <span
-            className={`bg-violet-300 px-3 py-6 text-2xl rounded-2xl dark:bg-gray-500 `}
-          >
-            <GiNightSleep />
-          </span>
-          <div>
-            <h2 className="text-xl">
-              <span className="text-2xl font-bold">8 Hours</span>
-            </h2>
-            <p className="font-bold">Sleep Goal</p>
-          </div>
-        </div>
-        <div className="bg-white p-6 rounded-2xl flex items-center gap-4 dark:bg-gray-600 dark:text-gray-400">
-          <span
-            className={`bg-blue-300 px-3 py-6 text-2xl rounded-2xl dark:bg-gray-500 `}
+            className={`bg-blue-300 px-3 py-6 text-2xl rounded-2xl dark:bg-gray-500`}
           >
             <GiRunningNinja />
           </span>
           <div>
-            <h2 className="text-xl">
-              <span className="text-2xl font-bold">8.0 KM</span>
-            </h2>
-            <p className="font-bold">Daily Steps</p>
+            {goalsData ? (
+              <>
+                <h2 className="text-xl">
+                  <span className="text-2xl font-bold">
+                    {goalsData.daily_steps_goal}
+                  </span>
+                </h2>
+                <p className="font-bold">Daily Steps</p>
+              </>
+            ) : (
+              <Loading />
+            )}
+          </div>
+        </div>
+        <div className="bg-white p-6 rounded-2xl flex items-center gap-4 dark:bg-gray-600 dark:text-gray-400">
+          <span
+            className={`bg-violet-300 px-3 py-6 text-2xl rounded-2xl dark:bg-gray-500`}
+          >
+            <GiNightSleep />
+          </span>
+          <div>
+            {goalsData ? (
+              <>
+                <h2 className="text-xl">
+                  <span className="text-2xl font-bold">
+                    {goalsData.sleep_goal} Hours
+                  </span>
+                </h2>
+                <p className="font-bold">Sleep Goal</p>
+              </>
+            ) : (
+              <Loading />
+            )}
           </div>
         </div>
         <div className="bg-white p-6 rounded-2xl flex items-center gap-4 dark:bg-gray-600 dark:text-gray-400">
@@ -74,10 +99,7 @@ const MemberStats = ({ darkMode }) => {
                 <p className="font-bold">Membership Left</p>
               </>
             ) : (
-              
-                <Loading />
-             
-              
+              <Loading />
             )}
           </div>
         </div>
