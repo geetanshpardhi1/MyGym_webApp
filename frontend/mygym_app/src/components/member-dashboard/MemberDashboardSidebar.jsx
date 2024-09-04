@@ -1,8 +1,20 @@
 import React from "react";
-import { links } from "../../constants";
-import LinkItem from "./LinkItem";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../store/features/authSlice";
+import { IoIosLogOut } from "react-icons/io";
+import { CiCalendar } from "react-icons/ci";
+import { IoSettingsOutline } from "react-icons/io5";
 
 const MemberDashboardSidebar = ({ isSidebarOpen }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
+
   return (
     <aside
       className={`fixed top-0 left-0 z-40 
@@ -13,13 +25,36 @@ const MemberDashboardSidebar = ({ isSidebarOpen }) => {
         }`}
     >
       <div className="h-full px-3 pb-4 overflow-y-auto">
-        <ul className="space-y-2 font-medium">{
-        
-        links.map((link,index)=>(
-            <LinkItem key={index} {...link}/>
-        ))
-        
-        }</ul>
+        <ul className="space-y-2 font-medium">
+          <li className="cursor-pointer">
+            <a
+              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white 
+      hover:bg-gray-200 dark:hover:bg-gray-700"
+            >
+              <CiCalendar className="mr-2" />
+              <span className="flex-1 me-3 ">Calendar</span>
+            </a>
+          </li>
+          <li className="cursor-pointer">
+            <a
+              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white 
+      hover:bg-gray-200 dark:hover:bg-gray-700"
+            >
+              <IoSettingsOutline className="mr-2"/>
+              <span className="flex-1 me-3 ">Settings</span>
+            </a>
+          </li>
+          <li className="cursor-pointer">
+            <a
+              onClick={handleLogout}
+              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white 
+      hover:bg-gray-200 dark:hover:bg-gray-700"
+            >
+              <IoIosLogOut className="mr-2" />
+              <span className="flex-1 me-3 ">Logout</span>
+            </a>
+          </li>
+        </ul>
       </div>
     </aside>
   );

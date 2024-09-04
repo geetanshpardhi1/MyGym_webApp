@@ -30,7 +30,7 @@ const MemberStats = ({ darkMode }) => {
               <>
                 <h2 className="text-xl">
                   <span className="text-2xl font-bold">
-                    {goalsData.calorie_goal}
+                    {goalsData.calorie_goal} .kCal
                   </span>
                 </h2>
                 <p className="font-bold">Calorie Budget</p>
@@ -72,7 +72,7 @@ const MemberStats = ({ darkMode }) => {
               <>
                 <h2 className="text-xl">
                   <span className="text-2xl font-bold">
-                    {goalsData.sleep_goal} Hours
+                    {goalsData.sleep_goal} Hrs
                   </span>
                 </h2>
                 <p className="font-bold">Sleep Goal</p>
@@ -93,10 +93,12 @@ const MemberStats = ({ darkMode }) => {
               <>
                 <h2 className="text-xl">
                   <span className="text-2xl font-bold">
-                    {membershipData.days_left} Days
+                  {membershipData.days_left > 0 
+                      ? `${membershipData.days_left} Days Left`
+                      : "Not a Member"}
                   </span>
                 </h2>
-                <p className="font-bold">Membership Left</p>
+                <p className="font-bold">Membership Status</p>
               </>
             ) : (
               <Loading />
