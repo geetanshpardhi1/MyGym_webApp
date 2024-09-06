@@ -14,6 +14,7 @@ import UpcomingWorkouts from "./UpcomingWorkout/UpcomingWorkouts";
 import { setMembershipDetails } from "../../store/features/membershipSlice";
 import Loading from "../Loading";
 import { setGoals } from "../../store/features/goalsSlice";
+import api from "../../api/axiosInstance";
 
 const MemberDashboard = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -33,14 +34,8 @@ const MemberDashboard = () => {
   useEffect(() => {
     const fetchWorkoutData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8000/users/workout-plans/",
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        const response = await api.get(
+          "http://localhost:8000/users/workout-plans/");
 
         dispatch(setWorkoutData(response.data));
       } catch (error) {
@@ -55,14 +50,8 @@ const MemberDashboard = () => {
   useEffect(() => {
     const fetchMembershipData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8000/users/membership/",
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        const response = await api.get(
+          "http://localhost:8000/users/membership/");
 
         dispatch(setMembershipDetails(response.data));
       } catch (error) {
@@ -77,11 +66,7 @@ const MemberDashboard = () => {
   useEffect(() => {
     const fetchGoalsData = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/users/goals/", {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await api.get("http://localhost:8000/users/goals/");
         dispatch(setGoals(response.data));
       } catch (error) {
         console.error("Error fetching membership details:", error);
