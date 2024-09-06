@@ -9,6 +9,31 @@ from .renderers import UserRenderer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from .serializers import CustomLoginSerializer,UserChangePasswordSerializer,SendPasswordResetEmailSerializer,UserPasswordResetSerializer
+
+#custom view for token refresh
+from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework_simplejwt.serializers import TokenRefreshSerializer
+from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
+
+
+class CookieTokenRefreshView(TokenRefreshView):
+    def post(self, request, *args, **kwargs):
+        refresh_token = request.COOKIES.get('refresh_token')
+        
+        if not refresh_token:
+            return Response({"error": "Refresh token missing"}, status=400)
+        
+        serializer = TokenRefreshSerializer(data={"refresh": refresh_token})
+
+        try:
+            serializer.is_valid(raise_exception=True)
+        except TokenError as e:
+            return Response({"error": "Invalid token"}, status=401)  # Custom error message for invalid token
+
+        return Response(serializer.validated_data)
+
+
 class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
     renderer_classes = [UserRenderer]
@@ -192,3 +217,5 @@ def goal_detail_update(request):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+

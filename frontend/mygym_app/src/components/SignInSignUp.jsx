@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import styles from "../styles/SignInSignUp.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
+import { useDispatch } from "react-redux";
 import { setCredentials } from "../store/features/authSlice";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axiosInstance";
 
 const SignInSignUp = () => {
-  // sliding functions
   const [isSignUpMode, setIsSignUpMode] = useState(false);
 
   const handleSignUpClick = () => {
@@ -31,13 +30,13 @@ const SignInSignUp = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:8000/users/login/",
+      const response = await api.post(
+        "/users/login/",
         {
           email_or_username,
           password,
         },
-        { withCredentials: true }
+        { withCredentials: true } 
       );
 
       dispatch(
@@ -45,9 +44,8 @@ const SignInSignUp = () => {
           user: response.data.user,
           accessToken: response.data.access,
         })
-        
       );
-      navigate("/member-dashboard")
+      navigate("/member-dashboard");
     } catch (err) {
       console.error("Login failed:", err);
       console.log(err.response.data.errors.detail);
@@ -58,8 +56,8 @@ const SignInSignUp = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:8000/users/register/",
+      const response = await api.post(
+        "/users/register/",
         {
           email,
           password,
@@ -67,7 +65,7 @@ const SignInSignUp = () => {
           is_trainer,
           is_member,
         },
-        { withCredentials: true }
+        { withCredentials: true } 
       );
 
       dispatch(
@@ -76,9 +74,9 @@ const SignInSignUp = () => {
           accessToken: response.data.access,
         })
       );
-      navigate("/member-dashboard")
+      navigate("/member-dashboard");
     } catch (err) {
-      console.error("Login failed:", err);
+      console.error("Registration failed:", err);
       console.log(err.response.data.errors);
     }
   };

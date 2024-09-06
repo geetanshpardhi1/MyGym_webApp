@@ -8,6 +8,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { clearMembershipDetails } from "../../store/features/membershipSlice";
 import { clearWorkoutData } from "../../store/features/wotkoutdataSlice";
 import { clearGoals } from "../../store/features/goalsSlice";
+import api from "../../api/axiosInstance";
 
 const MemberDashboardSidebar = ({ isSidebarOpen }) => {
   const dispatch = useDispatch();
@@ -20,6 +21,22 @@ const MemberDashboardSidebar = ({ isSidebarOpen }) => {
     dispatch(clearGoals());
     navigate("/");
   };
+
+  const handleTest = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await api.get(
+        "/users/membership/",
+      );
+      console.log(response)
+
+    } catch (err) {
+      console.error("Login failed:", err);
+      console.log(err.response.data);
+    }
+  };
+
+
 
   return (
     <aside
@@ -43,8 +60,10 @@ const MemberDashboardSidebar = ({ isSidebarOpen }) => {
           </li>
           <li className="cursor-pointer">
             <a
+              onClick={handleTest}
               className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white 
       hover:bg-gray-200 dark:hover:bg-gray-700"
+      
             >
               <IoSettingsOutline className="mr-2" />
               <span className="flex-1 me-3 ">Settings</span>
