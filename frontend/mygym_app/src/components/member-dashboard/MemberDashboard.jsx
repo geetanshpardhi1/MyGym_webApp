@@ -10,6 +10,7 @@ import Team from "./TeamSection/Team";
 import UpcomingWorkouts from "./UpcomingWorkout/UpcomingWorkouts";
 import UpdateWorkoutPlans from "./Settings/UpdateWorkoutPlan";
 import UpdateGoals from "./Settings/UpdateGoals";
+import UpdateProfile from "./Settings/UpdateProfile";
 
 
 const MemberDashboard = () => {
@@ -46,6 +47,7 @@ const MemberDashboard = () => {
         </MemberContent>
         {/* <UpdateWorkoutPlans />
         <UpdateGoals /> */}
+        <UpdateProfile />
         <MemberProfile />
       </MemberDashboardMain>
     </div>

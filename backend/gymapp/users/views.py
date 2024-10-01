@@ -2,8 +2,8 @@ from rest_framework import generics, status
 from django.conf import settings
 from rest_framework.decorators import api_view, permission_classes,renderer_classes
 from rest_framework.response import Response
-from .models import User,Membership,WorkoutPlan,Goal
-from .serializers import UserRegistrationSerializer,MembershipSerializer,WorkoutPlanSerializer,GoalSerializer
+from .models import User,Membership,WorkoutPlan,Goal,MemberProfile
+from .serializers import MemberProfileSerializer,UserRegistrationSerializer,MembershipSerializer,WorkoutPlanSerializer,GoalSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from .renderers import UserRenderer
 from rest_framework.permissions import IsAuthenticated
@@ -134,6 +134,28 @@ class UserPasswordResetView(APIView):
         if serializer.is_valid(raise_exception=True):
             return Response({'msg':'Password Changed'},status=status.HTTP_200_OK)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
+class MemberProfileRetrieveUpdateView(generics.RetrieveUpdateAPIView):
+    queryset = MemberProfile.objects.all()
+    serializer_class = MemberProfileSerializer
+    permission_classes = [IsAuthenticated]
+    renderer_classes = [UserRenderer]
+
+    def get_object(self):
+        return self.request.user.memberprofile
+
+class RemoveProfilePictureView(APIView):
+    permission_classes = [IsAuthenticated]
+    renderer_classes = [UserRenderer]
+
+    def delete(self, request):
+        profile = request.user.memberprofile
+        if profile.profile_picture:
+            profile.remove_profile_picture()
+            return Response({"message": "Profile picture removed successfully"}, status=status.HTTP_200_OK)
+        else:
+            return Response({"message": "No profile picture found"}, status=status.HTTP_400_BAD_REQUEST)
+
     
 class MembershipCreateOrUpdateView(APIView):
     permission_classes = [IsAuthenticated]

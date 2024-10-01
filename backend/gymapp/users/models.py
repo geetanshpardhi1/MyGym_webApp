@@ -57,16 +57,24 @@ class MemberProfile(models.Model):
     gender = models.CharField(max_length=10, choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other')], blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
     address = models.TextField(max_length=500, blank=True)
+    height = models.FloatField(null=True, blank=True) 
+    weight = models.FloatField(null=True, blank=True)  
     register_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user.email} - Member Profile"
+    
+    def remove_profile_picture(self):
+        self.profile_picture.delete(save=False)
+        self.profile_picture = None
+        self.save()
 
     @property
     def membership_days_left(self):
         if self.membership_end_date:
             return (self.membership_end_date - datetime.date.today()).days
         return 0
+
 
 class TrainerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

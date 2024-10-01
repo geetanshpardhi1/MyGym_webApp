@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User,MemberProfile
 from django.contrib.auth import authenticate
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -160,3 +160,35 @@ class GoalSerializer(serializers.ModelSerializer):
         model = Goal
         fields = ['id','calorie_goal', 'daily_steps_goal', 'sleep_goal', 'water_intake_goal']
         read_only_fields = ['id']
+        
+from rest_framework import serializers
+from .models import MemberProfile
+
+class MemberProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MemberProfile
+        fields = [
+            'profile_picture',
+            'date_of_birth',
+            'gender',
+            'phone_number',
+            'address',
+            'height',
+            'weight',
+        ]
+        extra_kwargs = {
+            'profile_picture': {'required': False},
+            'date_of_birth': {'required': False},
+            'gender': {'required': False},
+            'phone_number': {'required': False},
+            'address': {'required': False},
+            'height': {'required': False},
+            'weight': {'required': False},
+        }
+
+    def update(self, instance, validated_data):
+        profile_picture = validated_data.pop('profile_picture', None)
+        if profile_picture:
+            instance.profile_picture = profile_picture
+
+        return super().update(instance, validated_data)
