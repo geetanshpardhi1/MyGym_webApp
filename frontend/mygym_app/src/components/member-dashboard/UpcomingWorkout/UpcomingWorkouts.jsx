@@ -6,7 +6,8 @@ import Loading from "../../Loading";
 
 const UpcomingWorkouts = () => {
   const workoutData = useSelector((state) => state.workout.workoutData);
-
+ 
+  
   if (!workoutData) {
     return (
       <div className="bg-white p-5 rounded-2xl dark:bg-gray-600 dark:text-gray-300 flex-1 flex flex-col gap-5">
@@ -37,6 +38,8 @@ const UpcomingWorkouts = () => {
     .filter((workout) => getDayIndex(workout.day_of_week) > todayIndex)
     .sort((a, b) => getDayIndex(a.day_of_week) - getDayIndex(b.day_of_week))
     .slice(0, 3);
+
+  console.log(upcomingWorkouts)  //this has nothing in array
   return (
     <div className="bg-white p-5 rounded-2xl dark:bg-gray-600 dark:text-gray-300 flex-1 flex flex-col gap-5">
       <MemberTitle>Upcoming Workouts</MemberTitle>

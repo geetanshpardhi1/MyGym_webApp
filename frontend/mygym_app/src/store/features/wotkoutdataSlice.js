@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  workoutData: null,
+  workoutData: [],
 };
 
 const workoutSlice = createSlice({

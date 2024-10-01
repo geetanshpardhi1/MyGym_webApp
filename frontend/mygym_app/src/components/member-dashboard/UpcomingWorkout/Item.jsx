@@ -10,7 +10,7 @@ const Item = ({ event }) => {
         {event.day}
       </span>
       <div >
-        <h1 className="text-xl font-bold">{event.title}</h1>
+        <h1 className="text-xl font-bold">{event.title.toUpperCase()}</h1>
         <p className="text-gray-400">{event.description}</p>
         <p className="text-gray-400"><strong>Intensity</strong> : {event.intensity}</p>
       </div>

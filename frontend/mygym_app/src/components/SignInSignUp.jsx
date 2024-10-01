@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/SignInSignUp.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "../store/features/authSlice";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axiosInstance";
+import { setGoals } from "../store/features/goalsSlice";
+import { setMembershipDetails } from "../store/features/membershipSlice";
+import { setWorkoutData } from "../store/features/wotkoutdataSlice";
+
 
 const SignInSignUp = () => {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
@@ -25,6 +29,7 @@ const SignInSignUp = () => {
   const [is_member, setMember] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const accessToken = useSelector((state) => state.auth.accessToken);
 
   // LOGIN
   const handleLogin = async (e) => {
@@ -80,6 +85,31 @@ const SignInSignUp = () => {
       console.log(err.response.data.errors);
     }
   };
+
+    //fucntion to fetch workout plans,membership-details,user-goals after authentication.
+    useEffect(() => {
+      if (accessToken) {
+        const fetchData = async () => {
+          try {
+            const [workoutResponse, membershipResponse, goalsResponse] = await Promise.all([
+              api.get("http://localhost:8000/users/workout-plans/"),
+              api.get("http://localhost:8000/users/membership/"),
+              api.get("http://localhost:8000/users/goals/")
+            ]);
+            
+
+            dispatch(setMembershipDetails(membershipResponse.data));
+            dispatch(setWorkoutData(workoutResponse.data));
+            dispatch(setGoals(goalsResponse.data));
+  
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        };
+  
+        fetchData();
+      }
+    }, [dispatch, accessToken]);
 
   return (
     <div
