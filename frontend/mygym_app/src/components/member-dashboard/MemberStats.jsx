@@ -7,7 +7,8 @@ import { FaIdCard } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import Loading from "../Loading";
 
-const MemberStats = ({ darkMode }) => {
+const MemberStats = () => {
+  const darkMode = useSelector((state) => state.darkMode.mode);
   const membershipData = useSelector(
     (state) => state.membership.membershipData
   );

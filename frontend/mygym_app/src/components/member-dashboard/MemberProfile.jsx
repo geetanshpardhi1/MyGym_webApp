@@ -1,5 +1,3 @@
-// import DonutCharts from "./DonutCharts";
-// import Calender from "./Goals_calendar/Calendar";
 import Shortcuts from "./Shortcuts";
 import User from "./User";
 

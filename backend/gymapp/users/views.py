@@ -195,26 +195,24 @@ def user_workout_plans(request):
     user = request.user
 
     if request.method == 'GET':
-        # Get all workout plans for the authenticated user
         workout_plans = WorkoutPlan.objects.filter(user=user)
         serializer = WorkoutPlanSerializer(workout_plans, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        # Check if a workout plan for the day already exists
         day_of_week = request.data.get('day_of_week')
         existing_plan = WorkoutPlan.objects.filter(user=user, day_of_week=day_of_week).first()
 
         if existing_plan:
-            # Update the existing plan
             serializer = WorkoutPlanSerializer(existing_plan, data=request.data)
         else:
-            # Create a new workout plan
             serializer = WorkoutPlanSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save(user=user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            workout_plans = WorkoutPlan.objects.filter(user=user)
+            all_workout_serialized = WorkoutPlanSerializer(workout_plans, many=True)
+            return Response(all_workout_serialized.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         

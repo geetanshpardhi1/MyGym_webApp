@@ -8,11 +8,11 @@ const workoutSlice = createSlice({
   name: "workout",
   initialState,
   reducers: {
-    setWorkoutData: (state, action) => {
+    setWorkoutData(state, action) {
       state.workoutData = action.payload;
     },
     clearWorkoutData: (state) => {
-      state.workoutData = null;
+      state.workoutData = [];
     },
   },
 });

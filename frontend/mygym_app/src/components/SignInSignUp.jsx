@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../api/axiosInstance";
 import { setGoals } from "../store/features/goalsSlice";
 import { setMembershipDetails } from "../store/features/membershipSlice";
-import { setWorkoutData } from "../store/features/wotkoutdataSlice";
+import { setWorkoutData } from "../store/features/workoutdataSlice";
 
 
 const SignInSignUp = () => {

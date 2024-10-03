@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../api/axiosInstance";
 import { setGoals } from "../../../store/features/goalsSlice";
@@ -11,6 +11,13 @@ const UpdateGoals = () => {
   const accessToken = useSelector((state) => state.auth.accessToken);
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(""), 3000); 
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

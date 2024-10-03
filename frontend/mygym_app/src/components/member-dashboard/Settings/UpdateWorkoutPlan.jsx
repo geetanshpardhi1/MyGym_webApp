@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../api/axiosInstance";
-import { setWorkoutData } from "../../../store/features/wotkoutdataSlice";
+import { setWorkoutData } from "../../../store/features/workoutdataSlice";
 
 const UpdateWorkoutPlans = () => {
   const dispatch = useDispatch();
   const workoutData = useSelector((state) => state.workout.workoutData);
+  
 
 
   const daysOfWeek = [
@@ -26,6 +27,13 @@ const UpdateWorkoutPlans = () => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(""), 3000); 
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
+  useEffect(() => {
     const currentWorkout = workoutData.find(
       (workout) => workout.day_of_week === selectedDay
     );
@@ -43,7 +51,7 @@ const UpdateWorkoutPlans = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const payload = {
       day_of_week: selectedDay,
       duration,
@@ -51,11 +59,15 @@ const UpdateWorkoutPlans = () => {
       description,
       intensity,
     };
-
+  
     try {
       const response = await api.post("users/workout-plans/", payload);
-      if (response.status === 200) {
-        dispatch(setWorkoutData(response.data));
+      
+      // Check for both 200 and 201 status codes
+      if (response.status === 200 || response.status === 201) {
+        console.log(typeof(response.data))
+        dispatch(setWorkoutData(response.data)); 
+        console.log(workoutData)
         setMessage("Workout updated successfully!");
       }
     } catch (error) {
@@ -63,6 +75,7 @@ const UpdateWorkoutPlans = () => {
       setMessage("Failed to update workout.");
     }
   };
+  
 
   return (
     <div className="bg-white p-5 rounded-2xl dark:bg-gray-600 dark:text-gray-300 flex-1 flex flex-col gap-5">

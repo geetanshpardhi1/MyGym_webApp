@@ -32,7 +32,7 @@ export const updateProfileData = createAsyncThunk('profile/updateProfileData', a
 const profileSlice = createSlice({
   name: 'profile',
   initialState: {
-    profileData: null,
+    profileData: [],
     status: 'idle',
     error: null,
   },

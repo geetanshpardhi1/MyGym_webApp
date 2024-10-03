@@ -11,9 +11,6 @@ const Member = ({ user }) => {
         />
         <div>
           <h2 className="font-bold">{user.name}</h2>
-          <span className="font-semibold text-gray-400 text-sm">
-            {user.country}
-          </span>
         </div>
       </div>
       <span

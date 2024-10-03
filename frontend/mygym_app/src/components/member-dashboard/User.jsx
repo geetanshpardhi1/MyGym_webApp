@@ -1,5 +1,5 @@
 import { BsThreeDots } from "react-icons/bs";
-import userlogo from "../../assets/user01.png";
+import userlogo from "../../assets/profile.png";
 import { useSelector } from "react-redux";
 
 const calculateAge = (dob) => {
@@ -34,7 +34,7 @@ const User = () => {
         <BsThreeDots className="cursor-pointer dark:text-gray-400" />
       </div>
       <div className="flex flex-col items-center justify-center dark:text-gray-400">
-        <img src={userlogo} alt="Sample Image" className="w-16 h-16 rounded-full" />
+        <img src={profile.profile_picture || userlogo} alt="NO IMAGE" className="w-16 h-16 rounded-full" />
         <h3 className="font-semibold mt-3">@{username}</h3>
       </div>
       <div className="flex flex-row items-center justify-between p-5 dark:text-gray-400">

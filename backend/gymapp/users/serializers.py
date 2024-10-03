@@ -7,7 +7,7 @@ from django.utils.encoding import smart_str,force_bytes,DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from rest_framework import serializers
-from .models import Membership,WorkoutPlan,Goal
+from .models import Membership,WorkoutPlan,Goal,MemberProfile
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -161,8 +161,6 @@ class GoalSerializer(serializers.ModelSerializer):
         fields = ['id','calorie_goal', 'daily_steps_goal', 'sleep_goal', 'water_intake_goal']
         read_only_fields = ['id']
         
-from rest_framework import serializers
-from .models import MemberProfile
 
 class MemberProfileSerializer(serializers.ModelSerializer):
     class Meta:

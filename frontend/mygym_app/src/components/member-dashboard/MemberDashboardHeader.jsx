@@ -1,7 +1,9 @@
 import { FaMoon, FaSun } from "react-icons/fa";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { MdSpaceDashboard } from "react-icons/md";
-const MemberDashboardHeader = ({ darkmode, toggleDarkMode, toggleSidebar }) => {
+import { useSelector } from "react-redux";
+const MemberDashboardHeader = ({ toggleDarkMode, toggleSidebar }) => {
+  const darkMode = useSelector((state) => state.darkMode.mode);
   return (
     <nav
       className="fixed p-1 top-0 z-50 w-full bg-white border-b border-grey-200 dark:bg-gray-800
@@ -38,7 +40,7 @@ const MemberDashboardHeader = ({ darkmode, toggleDarkMode, toggleSidebar }) => {
             className="dark:bg-slate-50 dark:text-slate-700 rounded-full p-2"
             onClick={toggleDarkMode}
           >
-            {darkmode ? <FaSun /> : <FaMoon />}
+            {darkMode ? <FaSun /> : <FaMoon />}
           </button>
         </div>
       </div>

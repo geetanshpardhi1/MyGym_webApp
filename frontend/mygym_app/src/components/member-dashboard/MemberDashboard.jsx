@@ -3,52 +3,46 @@ import "../../styles/member_dashboard.css";
 import MemberDashboardHeader from "./MemberDashboardHeader";
 import MemberDashboardSidebar from "./MemberDashboardSidebar";
 import MemberDashboardMain from "./MemberDashboardMain";
-import MemberContent from "./MemberContent";
-import MemberProfile from "./MemberProfile";
-import MemberStats from "./MemberStats";
-import Team from "./TeamSection/Team";
-import UpcomingWorkouts from "./UpcomingWorkout/UpcomingWorkouts";
-import UpdateWorkoutPlans from "./Settings/UpdateWorkoutPlan";
-import UpdateGoals from "./Settings/UpdateGoals";
-import UpdateProfile from "./Settings/UpdateProfile";
-
+import { Outlet } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleDarkModeAction } from "../../store/features/darkModeSlice";
 
 const MemberDashboard = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const darkMode = useSelector((state) => state.darkMode.mode);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  
+  const dispatch = useDispatch();
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
+    dispatch(toggleDarkModeAction());
   };
 
   const toggleSideBar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-
+  const handleOverlayClick = () => {
+    setIsSidebarOpen(false);
+  };
 
   return (
     <div className={`${darkMode && "dark"}  font-quickSand`}>
       <MemberDashboardHeader
         toggleDarkMode={toggleDarkMode}
-        darkmode={darkMode}
         toggleSidebar={toggleSideBar}
       />
-      <MemberDashboardSidebar isSidebarOpen={isSidebarOpen} />
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black opacity-50 sm:hidden"
+          onClick={handleOverlayClick}
+        ></div>
+      )}
+      <MemberDashboardSidebar
+        toggleSideBar={toggleSideBar}
+        isSidebarOpen={isSidebarOpen}
+      />
 
       <MemberDashboardMain>
-        <MemberContent>
-          <MemberStats darkMode={darkMode} />
-          <div className="flex flex-col gap-3 lg:flex-row">
-            <Team />
-            <UpcomingWorkouts />
-          </div>
-        </MemberContent>
-        {/* <UpdateWorkoutPlans />
-        <UpdateGoals /> */}
-        <UpdateProfile />
-        <MemberProfile />
+        <Outlet />
       </MemberDashboardMain>
     </div>
   );
