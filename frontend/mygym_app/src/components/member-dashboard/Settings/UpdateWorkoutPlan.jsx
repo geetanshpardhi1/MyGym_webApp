@@ -65,9 +65,7 @@ const UpdateWorkoutPlans = () => {
       
       // Check for both 200 and 201 status codes
       if (response.status === 200 || response.status === 201) {
-        console.log(typeof(response.data))
         dispatch(setWorkoutData(response.data)); 
-        console.log(workoutData)
         setMessage("Workout updated successfully!");
       }
     } catch (error) {
