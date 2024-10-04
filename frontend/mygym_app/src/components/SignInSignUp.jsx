@@ -26,8 +26,8 @@ const SignInSignUp = () => {
   const [email, setEmailOnly] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-  const [is_trainer, setTrainer] = useState("");
-  const [is_member, setMember] = useState("");
+  const [is_trainer, setTrainer] = useState(false);
+  const [is_member, setMember] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const accessToken = useSelector((state) => state.auth.accessToken);
@@ -52,7 +52,12 @@ const SignInSignUp = () => {
           accessToken: response.data.access,
         })
       );
-      navigate("/member-dashboard");
+      if (response.data.user.is_member == true){
+        navigate("/member-dashboard");
+      }
+      else{
+        console.log("is a trainer")
+      }
     } catch (err) {
       console.error("Login failed:", err);
       console.log(err.response.data.errors.detail);
@@ -91,7 +96,13 @@ const SignInSignUp = () => {
           accessToken: response.data.access,
         })
       );
-      navigate("/member-dashboard");
+      if (response.data.user.is_member == true){
+        navigate("/member-dashboard");
+      }
+      else{
+        console.log("is a trainer")
+      }
+          
     } catch (err) {
       console.error("Registration failed:", err);
       if (err.response && err.response.data && err.response.data.errors) {
