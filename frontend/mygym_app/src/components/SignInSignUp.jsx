@@ -11,6 +11,7 @@ import { setWorkoutData } from "../store/features/workoutdataSlice";
 const SignInSignUp = () => {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [linkSent, setlinkSent] = useState("");
   const [registerError, setRegisterError] = useState("");
 
   const handleSignUpClick = () => {
@@ -30,6 +31,8 @@ const SignInSignUp = () => {
   const [is_member, setMember] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [forgetPass, setforgetPass] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
   const accessToken = useSelector((state) => state.auth.accessToken);
 
   // LOGIN
@@ -52,11 +55,10 @@ const SignInSignUp = () => {
           accessToken: response.data.access,
         })
       );
-      if (response.data.user.is_member == true){
+      if (response.data.user.is_member == true) {
         navigate("/member-dashboard");
-      }
-      else{
-        console.log("is a trainer")
+      } else {
+        console.log("is a trainer");
       }
     } catch (err) {
       console.error("Login failed:", err);
@@ -69,6 +71,34 @@ const SignInSignUp = () => {
         setErrorMessage("Invalid credentials. Please try again.");
       } else {
         setErrorMessage("An unexpected error occurred. Please try again.");
+      }
+    }
+  };
+
+  // Forget Password
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    setErrorMessage("");
+    try {
+      const response = await api.post("/users/send-reset-password-email/", {
+        email: resetEmail,
+      });
+      setlinkSent("Link Sent Successfully.");
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.errors) {
+        const errors = err.response.data.errors;
+        let errorMssg = "";
+        for (const [field, message] of Object.entries(errors)) {
+          if (Array.isArray(message)) {
+            errorMssg += `${message[0]} `;
+          } else {
+            errorMssg += `${message} `;
+          }
+          break;
+        }
+        setErrorMessage(errorMssg.trim());
+      } else {
+        console.error("Registration failed:", err);
       }
     }
   };
@@ -96,13 +126,11 @@ const SignInSignUp = () => {
           accessToken: response.data.access,
         })
       );
-      if (response.data.user.is_member == true){
+      if (response.data.user.is_member == true) {
         navigate("/member-dashboard");
+      } else {
+        console.log("is a trainer");
       }
-      else{
-        console.log("is a trainer")
-      }
-          
     } catch (err) {
       console.error("Registration failed:", err);
       if (err.response && err.response.data && err.response.data.errors) {
@@ -123,7 +151,7 @@ const SignInSignUp = () => {
     }
   };
 
-  //fucntion to fetch workout plans,membership-details,user-goals after authentication.
+  //function to fetch workout plans,membership-details,user-goals after authentication.
   useEffect(() => {
     if (accessToken) {
       const fetchData = async () => {
@@ -156,67 +184,142 @@ const SignInSignUp = () => {
       <div className={styles["forms-container"]}>
         <div className={styles["signin-signup"]}>
           {/* SIGN IN FORM  */}
-          <form
-            className={`${styles["sign-in-form"]} ${
-              !isSignUpMode ? styles["active"] : ""
-            }`}
-            onSubmit={handleLogin}
-          >
-            <h2 className={styles.title}>Sign in</h2>
-            {errorMessage && (
-              <div
-                className="bg-red-100 border border-red-400 text-red-600 px-4 py-3 rounded relative"
-                role="alert"
-              >
-                <strong className="font-bold">{errorMessage}</strong>
+          {!forgetPass ? (
+            <form
+              className={`${styles["sign-in-form"]} ${
+                !isSignUpMode ? styles["active"] : ""
+              }`}
+              onSubmit={handleLogin}
+            >
+              <h2 className={styles.title}>Sign in</h2>
+              {errorMessage && (
+                <div
+                  className="bg-red-100 border border-red-400 text-red-600 px-4 py-3 rounded relative"
+                  role="alert"
+                >
+                  <strong className="font-bold">{errorMessage}</strong>
+                </div>
+              )}
+
+              <div className={styles["input-field"]}>
+                <i className="fas fa-user"></i>
+
+                <input
+                  required
+                  type="text"
+                  placeholder="Username"
+                  value={email_or_username}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
-            )}
-
-            <div className={styles["input-field"]}>
-              <i className="fas fa-user"></i>
-
+              <div className={styles["input-field"]}>
+                <i className="fas fa-lock"></i>
+                <input
+                  required
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
               <input
-                required
-                type="text"
-                placeholder="Username"
-                value={email_or_username}
-                onChange={(e) => setEmail(e.target.value)}
+                type="submit"
+                value="Login"
+                className={`${styles.btn} ${styles.solid}`}
               />
-            </div>
-            <div className={styles["input-field"]}>
-              <i className="fas fa-lock"></i>
-              <input
-                required
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <input
-              type="submit"
-              value="Login"
-              className={`${styles.btn} ${styles.solid}`}
-            />
+              <button
+                type="button"
+                className="text-black-500 cursor-pointer transition duration-300 ease-in-out hover:text-blue-700 hover:glow hover:shadow-blue-500/50"
+                onClick={() => setforgetPass(true)}
+              >
+                Forgot Password ?
+              </button>
 
-            <p className={styles["social-text"]}>
-              Or Sign in with social platforms
-            </p>
-            <div className={styles["social-media"]}>
-              <a href="#" className={styles["social-icon"]}>
-                <i className="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" className={styles["social-icon"]}>
-                <i className="fab fa-twitter"></i>
-              </a>
-              <a href="#" className={styles["social-icon"]}>
-                <i className="fab fa-google"></i>
-              </a>
-              <a href="#" className={styles["social-icon"]}>
-                <i className="fab fa-linkedin-in"></i>
-              </a>
-            </div>
-          </form>
+              <p className={styles["social-text"]}>
+                Or Sign in with social platforms
+              </p>
+              <div className={styles["social-media"]}>
+                <a href="#" className={styles["social-icon"]}>
+                  <i className="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" className={styles["social-icon"]}>
+                  <i className="fab fa-twitter"></i>
+                </a>
+                <a href="#" className={styles["social-icon"]}>
+                  <i className="fab fa-google"></i>
+                </a>
+                <a href="#" className={styles["social-icon"]}>
+                  <i className="fab fa-linkedin-in"></i>
+                </a>
+              </div>
+            </form>
+          ) : (
+            <form
+              className={`${styles["sign-in-form"]} ${
+                !isSignUpMode ? styles["active"] : ""
+              }`}
+              onSubmit={handleForgotPassword}
+            >
+              <h2 className={styles.title}>Foget Password</h2>
+              {errorMessage && (
+                <div
+                  className="bg-red-100 border border-red-400 text-red-600 px-4 py-3 rounded relative"
+                  role="alert"
+                >
+                  <strong className="font-bold">{errorMessage}</strong>
+                </div>
+              )}
+              {linkSent && (
+                <div
+                  className="bg-green-100 border border-green-400 text-green-600 px-4 py-3 rounded relative"
+                  role="success"
+                >
+                  <strong className="font-bold">{linkSent}</strong>
+                </div>
+              )}
+              <div className={styles["input-field"]}>
+                <i className="fas fa-user"></i>
+
+                <input
+                  required
+                  type="text"
+                  placeholder="Enter Your Email"
+                  value={resetEmail}
+                  onChange={(e) => setResetEmail(e.target.value)}
+                />
+              </div>
+              <input
+                type="submit"
+                value="Confirm"
+                className={`${styles.btn} ${styles.solid}`}
+              />
+              <button
+                type="button"
+                className="text-black-500 cursor-pointer transition duration-300 ease-in-out hover:text-blue-700 hover:glow hover:shadow-blue-500/50"
+                onClick={() => setforgetPass(false)}
+              >
+                Sign In ?
+              </button>
+
+              <p className={styles["social-text"]}>
+                Or Sign in with social platforms
+              </p>
+              <div className={styles["social-media"]}>
+                <a href="#" className={styles["social-icon"]}>
+                  <i className="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" className={styles["social-icon"]}>
+                  <i className="fab fa-twitter"></i>
+                </a>
+                <a href="#" className={styles["social-icon"]}>
+                  <i className="fab fa-google"></i>
+                </a>
+                <a href="#" className={styles["social-icon"]}>
+                  <i className="fab fa-linkedin-in"></i>
+                </a>
+              </div>
+            </form>
+          )}
 
           {/* SIGN UP FORM  */}
           <form
