@@ -8,9 +8,10 @@ import { setGoals } from "../store/features/goalsSlice";
 import { setMembershipDetails } from "../store/features/membershipSlice";
 import { setWorkoutData } from "../store/features/workoutdataSlice";
 
-
 const SignInSignUp = () => {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [registerError, setRegisterError] = useState("");
 
   const handleSignUpClick = () => {
     setIsSignUpMode(true);
@@ -34,6 +35,7 @@ const SignInSignUp = () => {
   // LOGIN
   const handleLogin = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
     try {
       const response = await api.post(
         "/users/login/",
@@ -41,7 +43,7 @@ const SignInSignUp = () => {
           email_or_username,
           password,
         },
-        { withCredentials: true } 
+        { withCredentials: true }
       );
 
       dispatch(
@@ -54,12 +56,22 @@ const SignInSignUp = () => {
     } catch (err) {
       console.error("Login failed:", err);
       console.log(err.response.data.errors.detail);
+      if (
+        err.response &&
+        err.response.data.errors &&
+        err.response.data.errors.detail
+      ) {
+        setErrorMessage("Invalid credentials. Please try again.");
+      } else {
+        setErrorMessage("An unexpected error occurred. Please try again.");
+      }
     }
   };
 
   // REGISTER
   const handleRegister = async (e) => {
     e.preventDefault();
+    setRegisterError("");
     try {
       const response = await api.post(
         "/users/register/",
@@ -70,7 +82,7 @@ const SignInSignUp = () => {
           is_trainer,
           is_member,
         },
-        { withCredentials: true } 
+        { withCredentials: true }
       );
 
       dispatch(
@@ -82,34 +94,47 @@ const SignInSignUp = () => {
       navigate("/member-dashboard");
     } catch (err) {
       console.error("Registration failed:", err);
-      console.log(err.response.data.errors);
+      if (err.response && err.response.data && err.response.data.errors) {
+        const errors = err.response.data.errors;
+        let errorMssg = "";
+        for (const [field, message] of Object.entries(errors)) {
+          if (Array.isArray(message)) {
+            errorMssg += `${message[0]} `;
+          } else {
+            errorMssg += `${message} `;
+          }
+          break;
+        }
+        setRegisterError(errorMssg.trim());
+      } else {
+        console.error("Registration failed:", err);
+      }
     }
   };
 
-    //fucntion to fetch workout plans,membership-details,user-goals after authentication.
-    useEffect(() => {
-      if (accessToken) {
-        const fetchData = async () => {
-          try {
-            const [workoutResponse, membershipResponse, goalsResponse] = await Promise.all([
+  //fucntion to fetch workout plans,membership-details,user-goals after authentication.
+  useEffect(() => {
+    if (accessToken) {
+      const fetchData = async () => {
+        try {
+          const [workoutResponse, membershipResponse, goalsResponse] =
+            await Promise.all([
               api.get("http://localhost:8000/users/workout-plans/"),
               api.get("http://localhost:8000/users/membership/"),
-              api.get("http://localhost:8000/users/goals/")
+              api.get("http://localhost:8000/users/goals/"),
             ]);
-            
 
-            dispatch(setMembershipDetails(membershipResponse.data));
-            dispatch(setWorkoutData(workoutResponse.data));
-            dispatch(setGoals(goalsResponse.data));
-  
-          } catch (error) {
-            console.error("Error fetching data:", error);
-          }
-        };
-  
-        fetchData();
-      }
-    }, [dispatch, accessToken]);
+          dispatch(setMembershipDetails(membershipResponse.data));
+          dispatch(setWorkoutData(workoutResponse.data));
+          dispatch(setGoals(goalsResponse.data));
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+
+      fetchData();
+    }
+  }, [dispatch, accessToken]);
 
   return (
     <div
@@ -127,9 +152,20 @@ const SignInSignUp = () => {
             onSubmit={handleLogin}
           >
             <h2 className={styles.title}>Sign in</h2>
+            {errorMessage && (
+              <div
+                className="bg-red-100 border border-red-400 text-red-600 px-4 py-3 rounded relative"
+                role="alert"
+              >
+                <strong className="font-bold">{errorMessage}</strong>
+              </div>
+            )}
+
             <div className={styles["input-field"]}>
               <i className="fas fa-user"></i>
+
               <input
+                required
                 type="text"
                 placeholder="Username"
                 value={email_or_username}
@@ -139,6 +175,7 @@ const SignInSignUp = () => {
             <div className={styles["input-field"]}>
               <i className="fas fa-lock"></i>
               <input
+                required
                 type="password"
                 placeholder="Password"
                 value={password}
@@ -178,18 +215,30 @@ const SignInSignUp = () => {
             onSubmit={handleRegister}
           >
             <h2 className={styles.title}>Sign up</h2>
+
+            {registerError && (
+              <div
+                className="bg-red-100 border border-red-400 text-red-600 px-4 py-3 rounded relative"
+                role="alert"
+              >
+                <strong className="font-bold">{registerError}</strong>
+              </div>
+            )}
+
             <div className={styles["input-field"]}>
               <i className="fas fa-user"></i>
               <input
+                required
                 type="text"
-                placeholder="Username or Email"
+                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmailOnly(e.target.value)}
               />
             </div>
             <div className={styles["input-field"]}>
-              <i className="fas fa-envelope"></i>
+              <i className="fas fa-lock"></i>
               <input
+                required
                 type="password"
                 placeholder="Password"
                 value={password}
@@ -199,6 +248,7 @@ const SignInSignUp = () => {
             <div className={styles["input-field"]}>
               <i className="fas fa-lock"></i>
               <input
+                required
                 type="password"
                 placeholder="Confirm Password"
                 value={password2}
@@ -206,9 +256,10 @@ const SignInSignUp = () => {
               />
             </div>
 
-            <div className={styles["input-field"]}>
-              <label>
+            <div className="flex flex-col space-y-2">
+              <label className="inline-flex items-center">
                 <input
+                  required
                   type="radio"
                   value="member"
                   checked={is_member}
@@ -216,10 +267,12 @@ const SignInSignUp = () => {
                     setMember(true);
                     setTrainer(false);
                   }}
+                  className="form-radio text-blue-600 h-4 w-4 transition duration-150 ease-in-out"
                 />
-                Member
+                <span className="ml-2 text-gray-700">Member</span>
               </label>
-              <label>
+
+              <label className="inline-flex items-center">
                 <input
                   type="radio"
                   value="trainer"
@@ -228,10 +281,12 @@ const SignInSignUp = () => {
                     setMember(false);
                     setTrainer(true);
                   }}
+                  className="form-radio text-blue-600 h-4 w-4 transition duration-150 ease-in-out"
                 />
-                Trainer
+                <span className="ml-2 text-gray-700">Trainer</span>
               </label>
             </div>
+
             <input type="submit" className={styles.btn} value="Sign up" />
             <p className={styles["social-text"]}>
               Or Sign up with social platforms
