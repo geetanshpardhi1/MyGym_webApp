@@ -8,6 +8,7 @@ from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from rest_framework import serializers
 from .models import Membership,WorkoutPlan,Goal,MemberProfile
+from .utils import send_email
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -95,7 +96,7 @@ class SendPasswordResetEmailSerializer(serializers.Serializer):
             link = 'http://localhost:5173/api/user/reset-password/'+uid+'/'+token+'/'
             attrs['reset_link'] = link
             print(link)
-            #send email code here
+            send_email(link,email)
             return attrs
             
         else:

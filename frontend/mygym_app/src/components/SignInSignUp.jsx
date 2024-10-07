@@ -14,6 +14,20 @@ const SignInSignUp = () => {
   const [linkSent, setlinkSent] = useState("");
   const [registerError, setRegisterError] = useState("");
 
+  // logic to autoreset error messages
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => setErrorMessage(""), 3000); 
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
+  useEffect(() => {
+    if (registerError) {
+      const timer = setTimeout(() => setRegisterError(""), 3000); 
+      return () => clearTimeout(timer);
+    }
+  }, [registerError]);
+
   const handleSignUpClick = () => {
     setIsSignUpMode(true);
   };
