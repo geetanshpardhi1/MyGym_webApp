@@ -116,7 +116,6 @@ class Membership(models.Model):
     duration = models.CharField(max_length=50, choices=DURATION_CHOICES, blank=True, null=True)
     start_date = models.DateField(editable=False, blank=True, null=True)
     end_date = models.DateField(editable=False, blank=True, null=True)
-    days_left = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         if self.membership_type and self.duration:
@@ -127,18 +126,21 @@ class Membership(models.Model):
             self.end_date = self.start_date + datetime.timedelta(days=duration_days)
             
             self.membership_status = 'Member'
-            today = datetime.date.today()
-            if self.end_date > today:
-                self.days_left = (self.end_date - today).days
-            else:
-                self.days_left = 0
+            
         else:
             self.membership_status = 'Not A Member'
             self.start_date = None
             self.end_date = None
-            self.days_left = 0
 
         super().save(*args, **kwargs)
+        
+    @property
+    def days_left(self):
+        if self.end_date:
+            today = datetime.date.today()
+            if self.end_date > today:
+                return (self.end_date - today).days
+        return 0
 
     def __str__(self):
         return f"{self.user.email} - {self.membership_type} ({self.duration})"

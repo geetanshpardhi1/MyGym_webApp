@@ -136,8 +136,11 @@ class MembershipSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Membership
-        fields = ['membership_status', 'membership_type', 'duration', 'start_date', 'end_date','days_left']
-        read_only_fields = ['start_date', 'end_date']
+        fields = ['membership_status', 'membership_type', 'duration', 'start_date', 'end_date', 'days_left']
+        read_only_fields = ['start_date', 'end_date', 'days_left']
+
+    def get_days_left(self, obj):
+        return obj.days_left
 
     def create(self, validated_data):
        

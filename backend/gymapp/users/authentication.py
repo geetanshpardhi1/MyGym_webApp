@@ -17,3 +17,5 @@ class EmailOrUsernameModelBackend(ModelBackend):
 
         if user.check_password(password) and self.user_can_authenticate(user):
             return user
+
+ 
