@@ -7,6 +7,7 @@ import api from "../api/axiosInstance";
 import { setGoals } from "../store/features/goalsSlice";
 import { setMembershipDetails } from "../store/features/membershipSlice";
 import { setWorkoutData } from "../store/features/workoutdataSlice";
+import { fetchProfileData } from "../store/features/profileSlice";
 
 const SignInSignUp = () => {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
@@ -180,6 +181,7 @@ const SignInSignUp = () => {
           dispatch(setMembershipDetails(membershipResponse.data));
           dispatch(setWorkoutData(workoutResponse.data));
           dispatch(setGoals(goalsResponse.data));
+          dispatch(fetchProfileData())
         } catch (error) {
           console.error("Error fetching data:", error);
         }
