@@ -10,6 +10,8 @@ import { store } from "./store/store.js";
 import PrivateRoutes from "./utils/ProtectedRoutes.jsx";
 import DashboardContent from "./components/member-dashboard/DashboardContent/DashboardContent.jsx";
 import Settings from "./components/member-dashboard/Settings/Settings.jsx";
+import MembershipCard from "./components/member-dashboard/Membership/MembershipCard.jsx";
+import MembershipMain from "./components/member-dashboard/Membership/MembershipMain.jsx";
 
 
 const router = createBrowserRouter([
@@ -31,6 +33,7 @@ const router = createBrowserRouter([
         children: [
           { path: "/member-dashboard/", element: <DashboardContent /> },
           { path: "/member-dashboard/settings", element: <Settings /> }, 
+          { path: "/member-dashboard/membership", element: <MembershipMain /> },
         ],
       },
     ],

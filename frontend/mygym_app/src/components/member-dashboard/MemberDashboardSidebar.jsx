@@ -46,6 +46,17 @@ const MemberDashboardSidebar = ({ isSidebarOpen }) => {
           </li>
           <li className="cursor-pointer">
             <Link
+            to="/member-dashboard/membership"
+              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white 
+      hover:bg-gray-200 dark:hover:bg-gray-700"
+      
+            >
+              <IoSettingsOutline className="mr-2" />
+              <span className="flex-1 me-3 ">Membership</span>
+            </Link>
+          </li>
+          <li className="cursor-pointer">
+            <Link
             to="/member-dashboard/settings"
               className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white 
       hover:bg-gray-200 dark:hover:bg-gray-700"

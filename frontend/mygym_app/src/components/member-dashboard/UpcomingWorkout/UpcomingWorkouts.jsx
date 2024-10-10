@@ -6,7 +6,6 @@ import Loading from "../../Loading";
 
 const UpcomingWorkouts = () => {
   const workoutData = useSelector((state) => state.workout.workoutData);
-  console.log(workoutData)
   // if (!workoutData || workoutData.length === 0 ||) {
   //   return (
   //     <div className="bg-white p-5 rounded-2xl dark:bg-gray-600 dark:text-gray-300 flex-1 flex flex-col gap-5">

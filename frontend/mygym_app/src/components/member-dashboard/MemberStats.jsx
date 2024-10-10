@@ -6,6 +6,7 @@ import ActivityGraph from "./Graphs/ActivityCharts";
 import { FaIdCard } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import Loading from "../Loading";
+import { Link } from "react-router-dom";
 
 const MemberStats = () => {
   const darkMode = useSelector((state) => state.darkMode.mode);
@@ -90,20 +91,26 @@ const MemberStats = () => {
             <FaIdCard />
           </span>
           <div>
-            {membershipData ? (
-              <>
-                <h2 className="text-xl">
-                  <span className="text-2xl font-bold">
-                  {membershipData.days_left > 0 
-                      ? `${membershipData.days_left} Days Left`
-                      : "Not a Member"}
-                  </span>
-                </h2>
-                <p className="font-bold">Membership Status</p>
-              </>
-            ) : (
-              <Loading />
-            )}
+            <Link to="/member-dashboard/membership">
+              <div>
+                {membershipData ? (
+                  <>
+                    <h2 className="text-xl">
+                      <span className="text-2xl font-bold">
+                        {membershipData.days_left > 0
+                          ? `${membershipData.days_left} Days Left`
+                          : "Not a Member"}
+                      </span>
+                    </h2>
+                    <p className="font-bold hover:text-orange-300 transition-colors duration-300">
+                      Membership Status
+                    </p>
+                  </>
+                ) : (
+                  <Loading />
+                )}
+              </div>
+            </Link>
           </div>
         </div>
       </div>
