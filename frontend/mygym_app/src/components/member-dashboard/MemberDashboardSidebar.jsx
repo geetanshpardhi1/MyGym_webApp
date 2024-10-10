@@ -8,6 +8,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { clearMembershipDetails } from "../../store/features/membershipSlice";
 import { clearWorkoutData } from "../../store/features/workoutdataSlice";
 import { clearGoals } from "../../store/features/goalsSlice";
+import { LiaIdCardSolid } from "react-icons/lia";
 
 
 const MemberDashboardSidebar = ({ isSidebarOpen }) => {
@@ -51,7 +52,7 @@ const MemberDashboardSidebar = ({ isSidebarOpen }) => {
       hover:bg-gray-200 dark:hover:bg-gray-700"
       
             >
-              <IoSettingsOutline className="mr-2" />
+              <LiaIdCardSolid className="mr-2" />
               <span className="flex-1 me-3 ">Membership</span>
             </Link>
           </li>
