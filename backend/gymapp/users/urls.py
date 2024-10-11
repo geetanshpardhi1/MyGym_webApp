@@ -1,6 +1,6 @@
 from django.urls import path,include
 from .views import goal_detail_update,RemoveProfilePictureView,MembershipCreateOrUpdateView,MembershipDetailView,CookieTokenRefreshView,user_workout_plans,UserRegistrationView,CustomLoginView,UserChangePasswordView,LogoutAPIView,SendPasswordResetEmailView,UserPasswordResetView,MemberProfileRetrieveUpdateView
-
+from users.api.api_razorpay import CreateOrderApiView,TransactionApiView
 
 
 
@@ -18,4 +18,9 @@ urlpatterns = [
     path('membership/', MembershipDetailView.as_view(), name='membership-days-left'),
     path('workout-plans/', user_workout_plans, name='user_workout_plans'),
     path('goals/', goal_detail_update, name='goal-detail-update'),
+    
+    #razor pay payment gateway urls
+    path("order/create/",CreateOrderApiView.as_view(),name="create_orderAPI"),
+    path("order/complete/",TransactionApiView.as_view(),name="complete_orderAPI")
+    
 ]

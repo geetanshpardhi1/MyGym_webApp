@@ -1,6 +1,6 @@
 # users/admin.py
 from django.contrib import admin
-from .models import User, MemberProfile, TrainerProfile, Membership, WorkoutPlan, Goal
+from .models import User, MemberProfile, TrainerProfile, Membership, WorkoutPlan, Goal,Transaction
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('email', 'username', 'is_trainer', 'is_member', 'is_staff', 'is_active')
@@ -21,3 +21,4 @@ admin.site.register(TrainerProfile, TrainerProfileAdmin)
 admin.site.register(Membership, MembershipAdmin) 
 admin.site.register(WorkoutPlan)
 admin.site.register(Goal)
+admin.site.register(Transaction)

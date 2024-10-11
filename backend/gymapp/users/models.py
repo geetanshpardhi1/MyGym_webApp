@@ -50,6 +50,19 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
+
+#model for razorpay transaction storing.
+class Transaction(models.Model):
+    payment_id = models.CharField(max_length=100,verbose_name='Payment ID')
+    order_id = models.CharField(max_length=100,verbose_name="Order ID")
+    signature = models.CharField(max_length=300,verbose_name="Signature")
+    amount = models.IntegerField(verbose_name="Amount")
+    datetime = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return str(self.payment_id)
+    
+    
 class MemberProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
@@ -185,3 +198,4 @@ class Goal(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Goals"
+    

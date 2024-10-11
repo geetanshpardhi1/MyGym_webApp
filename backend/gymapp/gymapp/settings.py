@@ -142,6 +142,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
 
 # Internationalization
@@ -177,3 +178,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+RAZOR_KEY_ID = os.getenv('RAZOR_KEY_ID')
+RAZOR_KEY_SECRET = os.getenv('RAZOR_KEY_SECRET')
