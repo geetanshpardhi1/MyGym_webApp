@@ -1,10 +1,24 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import MembershipPlanModal from "./MembershipPlanModal";
+import SuccessModal from "./SuccessModal";
+import ErrorModal from "./ErrorModal";
 
 const MembershipCard = () => {
   const membership = useSelector((state) => state.membership.membershipData);
   const [showModal, setShowModal] = useState(false);
+
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+
+  const handleCloseSuccessModal = () => {
+    setShowSuccessModal(false);
+  };
+
+
+  const handleCloseErrorModal = () => {
+    setShowErrorModal(false);
+  };
 
   const handlePurchaseClick = () => {
     setShowModal(true);
@@ -37,7 +51,11 @@ const MembershipCard = () => {
         </div>
       )}
 
-      {showModal && <MembershipPlanModal closeModal={closeModal} />}
+      {showModal && <MembershipPlanModal closeModal={closeModal} setShowErrorModal={setShowErrorModal} setShowSuccessModal={setShowSuccessModal} />}
+      {showSuccessModal && (
+        <SuccessModal closeModal={handleCloseSuccessModal} />
+      )}
+      {showErrorModal && <ErrorModal closeModal={handleCloseErrorModal} />}
     </div>
   );
 };
