@@ -2,10 +2,8 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import MembershipPlanModal from "./MembershipPlanModal";
 
-
 const MembershipCard = () => {
   const membership = useSelector((state) => state.membership.membershipData);
-  console.log(membership)
   const [showModal, setShowModal] = useState(false);
 
   const handlePurchaseClick = () => {
@@ -17,11 +15,10 @@ const MembershipCard = () => {
   };
 
   return (
-    
     <div className="bg-white p-5 rounded-2xl dark:bg-gray-600 dark:text-gray-300 flex-1 flex flex-col gap-5">
       <h2 className="text-xl font-bold mb-4">Membership Details</h2>
 
-      {membership.membership_status === "Not A Member" ? (
+      {membership?.membership_status === "Not A Member" ? (
         <div className="text-center">
           <p className="mb-4">You are currently not a member.</p>
           <button
@@ -33,10 +30,10 @@ const MembershipCard = () => {
         </div>
       ) : (
         <div>
-          <p>Membership Type: {membership.membership_type}</p>
-          <p>Duration: {membership.duration}</p>
-          <p>Days Left: {membership.days_left}</p>
-          <p>Status: {membership.membership_status}</p>
+          <p>Membership Type: {membership?.membership_type}</p>
+          <p>Duration: {membership?.duration}</p>
+          <p>Days Left: {membership?.days_left}</p>
+          <p>Status: {membership?.membership_status}</p>
         </div>
       )}
 
