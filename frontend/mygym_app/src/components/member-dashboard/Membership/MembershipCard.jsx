@@ -59,9 +59,22 @@ const MembershipCard = () => {
             <span className="font-semibold">Status:</span>{" "}
             {membership?.membership_status}
           </p>
+
+          {membership?.days_left === 0 ? (
+            <div className="text-center">
+              <p className="text-red-500 font-bold text-lg">Membership Expired</p>
+              <button
+                onClick={handlePurchaseClick}
+                className="bg-red-500 text-white py-3 px-6 rounded-lg hover:bg-red-600 transition-colors duration-300 ease-in-out shadow-md"
+              >
+                Renew Membership
+              </button>
+            </div>
+          ) : null}
         </div>
       )}
 
+      {/* Modals */}
       {showModal && (
         <MembershipPlanModal
           closeModal={closeModal}
