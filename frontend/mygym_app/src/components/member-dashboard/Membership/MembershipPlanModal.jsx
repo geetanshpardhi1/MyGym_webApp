@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRazorpay } from "react-razorpay";
 import { useDispatch, useSelector } from "react-redux";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/swiper-bundle.css';
 import { setMembershipDetails } from "../../../store/features/membershipSlice";
 
 const MembershipPlanModal = ({
@@ -28,23 +31,22 @@ const MembershipPlanModal = ({
 
   const amountMapping = {
     Base: {
-      Monthly: 1000 * 100, // Rs 1000 in paise
-      Quarterly: 2500 * 100, // Rs 2500 in paise
-      Yearly: 8000 * 100, // Rs 8000 in paise
+      Monthly: 1000 * 100,
+      Quarterly: 2500 * 100,
+      Yearly: 8000 * 100,
     },
     Gold: {
-      Monthly: 2000 * 100, // Rs 2000 in paise
-      Quarterly: 5000 * 100, // Rs 5000 in paise
-      Yearly: 15000 * 100, // Rs 15000 in paise
+      Monthly: 2000 * 100,
+      Quarterly: 5000 * 100,
+      Yearly: 15000 * 100,
     },
     Premium: {
-      Monthly: 4000 * 100, // Rs 4000 in paise
-      Quarterly: 10000 * 100, // Rs 10000 in paise
-      Yearly: 30000 * 100, // Rs 30000 in paise
+      Monthly: 4000 * 100,
+      Quarterly: 10000 * 100,
+      Yearly: 30000 * 100,
     },
   };
 
-  // Function to complete the order after payment
   const completeOrder = (paymentID, orderID, signature, amount, plan) => {
     axios
       .post("http://127.0.0.1:8000/users/order/complete/", {
@@ -125,7 +127,7 @@ const MembershipPlanModal = ({
             },
           },
           prefill: {
-            name: "Geetansh pardhi",
+            name: "Geetansh Pardhi",
             email: "youremail@example.com",
             contact: "9999999999",
           },
@@ -148,72 +150,87 @@ const MembershipPlanModal = ({
           Choose Your Membership Plan
         </h2>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <Swiper
+          modules={[Pagination, Navigation]}
+          pagination={{ clickable: true }}
+          navigation
+          spaceBetween={50}
+          slidesPerView={1}
+          
+        >
           {/* Base Plan */}
-          <div className="border p-4 rounded-md text-center dark:border-gray-600">
-            <h3 className="text-lg font-bold">Base Plan</h3>
-            <p>Price: Rs {amountMapping.Base[selectedDuration.Base] / 100}</p>
-            <select
-              value={selectedDuration.Base}
-              onChange={(e) => handleDurationChange("Base", e.target.value)}
-              className="mt-2 border p-2 rounded-md dark:text-gray-700 font-semibold"
-            >
-              <option value="Monthly">Monthly</option>
-              <option value="Quarterly">Quarterly</option>
-              <option value="Yearly">Yearly</option>
-            </select>
-            <button
-              className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-              onClick={() => handlePayment("Base")}
-            >
-              Buy Now
-            </button>
-          </div>
+          <SwiperSlide className="pb-10">
+            <div className="border p-4 rounded-md text-center dark:border-gray-600">
+              <h3 className="text-lg font-bold">Base Plan</h3>
+              <p>Price: Rs {amountMapping.Base[selectedDuration.Base] / 100}</p>
+              <select
+                value={selectedDuration.Base}
+                onChange={(e) => handleDurationChange("Base", e.target.value)}
+                className="mt-2 border p-2 rounded-md dark:text-gray-700 font-semibold"
+              >
+                <option value="Monthly">Monthly</option>
+                <option value="Quarterly">Quarterly</option>
+                <option value="Yearly">Yearly</option>
+              </select>
+              <button
+                className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                onClick={() => handlePayment("Base")}
+              >
+                Buy Now
+              </button>
+            </div>
+          </SwiperSlide>
 
           {/* Gold Plan */}
-          <div className="border p-4 rounded-md text-center dark:border-gray-600">
-            <h3 className="text-lg font-bold">Gold Plan</h3>
-            <p>Price: Rs {amountMapping.Gold[selectedDuration.Gold] / 100}</p>
-            <select
-              value={selectedDuration.Gold}
-              onChange={(e) => handleDurationChange("Gold", e.target.value)}
-              className="mt-2 border p-2 rounded-md dark:text-gray-700 font-semibold"
-            >
-              <option value="Monthly">Monthly</option>
-              <option value="Quarterly">Quarterly</option>
-              <option value="Yearly">Yearly</option>
-            </select>
-            <button
-              className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-              onClick={() => handlePayment("Gold")}
-            >
-              Buy Now
-            </button>
-          </div>
+          <SwiperSlide>
+            <div className="border p-4 rounded-md text-center dark:border-gray-600">
+              <h3 className="text-lg font-bold">Gold Plan</h3>
+              <p>Price: Rs {amountMapping.Gold[selectedDuration.Gold] / 100}</p>
+              <select
+                value={selectedDuration.Gold}
+                onChange={(e) => handleDurationChange("Gold", e.target.value)}
+                className="mt-2 border p-2 rounded-md dark:text-gray-700 font-semibold"
+              >
+                <option value="Monthly">Monthly</option>
+                <option value="Quarterly">Quarterly</option>
+                <option value="Yearly">Yearly</option>
+              </select>
+              <button
+                className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                onClick={() => handlePayment("Gold")}
+              >
+                Buy Now
+              </button>
+            </div>
+          </SwiperSlide>
 
           {/* Premium Plan */}
-          <div className="border p-4 rounded-md text-center dark:border-gray-600">
-            <h3 className="text-lg font-bold">Premium Plan</h3>
-            <p>
-              Price: Rs {amountMapping.Premium[selectedDuration.Premium] / 100}
-            </p>
-            <select
-              value={selectedDuration.Premium}
-              onChange={(e) => handleDurationChange("Premium", e.target.value)}
-              className="mt-2 border p-2 rounded-md dark:text-gray-700 font-semibold"
-            >
-              <option value="Monthly">Monthly</option>
-              <option value="Quarterly">Quarterly</option>
-              <option value="Yearly">Yearly</option>
-            </select>
-            <button
-              className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-              onClick={() => handlePayment("Premium")}
-            >
-              Buy Now
-            </button>
-          </div>
-        </div>
+          <SwiperSlide>
+            <div className="border p-4 rounded-md text-center dark:border-gray-600">
+              <h3 className="text-lg font-bold">Premium Plan</h3>
+              <p>
+                Price: Rs {amountMapping.Premium[selectedDuration.Premium] / 100}
+              </p>
+              <select
+                value={selectedDuration.Premium}
+                onChange={(e) =>
+                  handleDurationChange("Premium", e.target.value)
+                }
+                className="mt-2 border p-2 rounded-md dark:text-gray-700 font-semibold"
+              >
+                <option value="Monthly">Monthly</option>
+                <option value="Quarterly">Quarterly</option>
+                <option value="Yearly">Yearly</option>
+              </select>
+              <button
+                className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                onClick={() => handlePayment("Premium")}
+              >
+                Buy Now
+              </button>
+            </div>
+          </SwiperSlide>
+        </Swiper>
 
         <button
           onClick={closeModal}

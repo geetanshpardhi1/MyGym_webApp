@@ -15,7 +15,6 @@ const MembershipCard = () => {
     setShowSuccessModal(false);
   };
 
-
   const handleCloseErrorModal = () => {
     setShowErrorModal(false);
   };
@@ -29,29 +28,47 @@ const MembershipCard = () => {
   };
 
   return (
-    <div className="bg-white p-5 rounded-2xl dark:bg-gray-600 dark:text-gray-300 flex-1 flex flex-col gap-5">
-      <h2 className="text-xl font-bold mb-4">Membership Details</h2>
+    <div className="bg-white dark:bg-gray-800 dark:text-gray-300 p-6 rounded-lg shadow-lg max-w-md mx-auto my-6">
+      <h2 className="text-2xl font-bold mb-6 text-center">Membership Details</h2>
 
       {membership?.membership_status === "Not A Member" ? (
         <div className="text-center">
-          <p className="mb-4">You are currently not a member.</p>
+          <p className="mb-4 text-lg">You are currently not a member.</p>
           <button
             onClick={handlePurchaseClick}
-            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+            className="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors duration-300 ease-in-out shadow-md"
           >
             Purchase Membership
           </button>
         </div>
       ) : (
-        <div>
-          <p>Membership Type: {membership?.membership_type}</p>
-          <p>Duration: {membership?.duration}</p>
-          <p>Days Left: {membership?.days_left}</p>
-          <p>Status: {membership?.membership_status}</p>
+        <div className="text-center space-y-4">
+          <p className="text-lg">
+            <span className="font-semibold">Membership Type:</span>{" "}
+            {membership?.membership_type}
+          </p>
+          <p className="text-lg">
+            <span className="font-semibold">Duration:</span>{" "}
+            {membership?.duration}
+          </p>
+          <p className="text-lg">
+            <span className="font-semibold">Days Left:</span>{" "}
+            {membership?.days_left}
+          </p>
+          <p className="text-lg">
+            <span className="font-semibold">Status:</span>{" "}
+            {membership?.membership_status}
+          </p>
         </div>
       )}
 
-      {showModal && <MembershipPlanModal closeModal={closeModal} setShowErrorModal={setShowErrorModal} setShowSuccessModal={setShowSuccessModal} />}
+      {showModal && (
+        <MembershipPlanModal
+          closeModal={closeModal}
+          setShowErrorModal={setShowErrorModal}
+          setShowSuccessModal={setShowSuccessModal}
+        />
+      )}
       {showSuccessModal && (
         <SuccessModal closeModal={handleCloseSuccessModal} />
       )}
