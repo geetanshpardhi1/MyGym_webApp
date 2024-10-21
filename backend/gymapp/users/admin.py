@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import User, MemberProfile, TrainerProfile, Membership, WorkoutPlan, Goal,Transaction
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('email', 'username', 'is_trainer', 'is_member', 'is_staff', 'is_active')
+    list_display = ('email', 'username', 'is_trainer', 'is_member', 'is_staff', 'is_active','is_verified')
 
 class MemberProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'profile_picture', 'date_of_birth', 'gender', 'phone_number', 'address', 'register_date')

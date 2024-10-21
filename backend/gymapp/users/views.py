@@ -8,13 +8,15 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .renderers import UserRenderer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-from .serializers import CustomLoginSerializer,UserChangePasswordSerializer,SendPasswordResetEmailSerializer,UserPasswordResetSerializer
+from .serializers import ResendVerifyOTPSerializer,VerifyAccountSerializer,CustomLoginSerializer,UserChangePasswordSerializer,SendPasswordResetEmailSerializer,UserPasswordResetSerializer
 
 #custom view for token refresh
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
+import random
+from .utils import send_otp_email
 
 
 class CookieTokenRefreshView(TokenRefreshView):
@@ -43,7 +45,10 @@ class UserRegistrationView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        
+        otp = random.randint(100000,999999)
+        send_otp_email(user.email,otp)
+        user.otp = otp
+        user.save()
         refresh = RefreshToken.for_user(user)
         
         response_data = {
@@ -53,6 +58,7 @@ class UserRegistrationView(generics.CreateAPIView):
                     'email': user.email,
                     'is_trainer': user.is_trainer,
                     'is_member': user.is_member,
+                    'is_verified':user.is_verified,
                 }
         }
         
@@ -68,6 +74,85 @@ class UserRegistrationView(generics.CreateAPIView):
         )
         return response
     
+#view to verify registration otp
+class VerifyOTP(APIView):
+    def post(self, request):
+        try:
+            serializer = VerifyAccountSerializer(data=request.data)
+            if serializer.is_valid():
+                email = serializer.validated_data['email']  
+                otp = serializer.validated_data['otp']
+                user = User.objects.filter(email=email).first()
+                if user is None:
+                    return Response({
+                        'mssg': 'User Not Exists'
+                    }, status=404)  
+
+                if user.otp != otp:
+                    return Response({
+                        'mssg': 'INVALID OTP'
+                    }, status=400)  
+
+                user.is_verified = True
+                user.save()
+
+                return Response({
+                    'mssg': 'Account Verified',
+                    'user': {
+                    'username': user.username,
+                    'email': user.email,
+                    'is_trainer': user.is_trainer,
+                    'is_member': user.is_member,
+                    'is_verified':user.is_verified,
+                }
+                }, status=200) 
+
+            return Response({
+                'mssg': 'Something went wrong',
+                'data': serializer.errors
+            }, status=400) 
+
+        except Exception as e:
+            print(e)
+            return Response({
+                'mssg': 'An error occurred',
+                'error': str(e)
+            }, status=500)  
+
+    
+class ResendVerificationOTPView(APIView):
+    def post(self, request):
+        try:
+            serializer = ResendVerifyOTPSerializer(data=request.data)
+            if serializer.is_valid():
+                email = serializer.validated_data['email']
+                user = User.objects.filter(email=email).first()
+                if user is None:
+                    return Response({
+                        'mssg': 'User Not Exists'
+                    }, status=404)  
+
+                otp = random.randint(100000,999999)
+                send_otp_email(user.email,otp)
+                user.otp = otp
+                user.save()
+
+                return Response({
+                    'mssg': 'OTP resent successfully'
+                
+                }, status=200) 
+
+            return Response({
+                'mssg': 'Something went wrong',
+                'data': serializer.errors
+            }, status=400) 
+
+        except Exception as e:
+            print(e)
+            return Response({
+                'mssg': 'An error occurred',
+                'error': str(e)
+            }, status=500) 
 class CustomLoginView(APIView):
     renderer_classes = [UserRenderer]
 

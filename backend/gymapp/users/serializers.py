@@ -17,7 +17,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'username', 'password', 'password2', 'is_trainer', 'is_member')
+        fields = ('email', 'username', 'password', 'password2', 'is_trainer', 'is_member','is_verified')
         extra_kwargs = {'username': {'required': False, 'allow_blank': True}}
 
     def validate(self, attrs):
@@ -34,7 +34,13 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
-
+class VerifyAccountSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    otp = serializers.CharField()
+    
+class ResendVerifyOTPSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    
 
 class CustomLoginSerializer(serializers.Serializer):
     email_or_username = serializers.CharField()
@@ -61,6 +67,7 @@ class CustomLoginSerializer(serializers.Serializer):
                     'email': user.email,
                     'is_trainer': user.is_trainer,
                     'is_member': user.is_member,
+                    'is_verified': user.is_verified,
                 }
         }
         

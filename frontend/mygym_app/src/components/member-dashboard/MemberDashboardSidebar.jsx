@@ -9,9 +9,10 @@ import { clearMembershipDetails } from "../../store/features/membershipSlice";
 import { clearWorkoutData } from "../../store/features/workoutdataSlice";
 import { clearGoals } from "../../store/features/goalsSlice";
 import { LiaIdCardSolid } from "react-icons/lia";
+import { clearProfileData } from "../../store/features/profileSlice";
 
 
-const MemberDashboardSidebar = ({ isSidebarOpen }) => {
+const MemberDashboardSidebar = ({ isSidebarOpen,toggleSideBar }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -20,6 +21,7 @@ const MemberDashboardSidebar = ({ isSidebarOpen }) => {
     dispatch(clearMembershipDetails());
     dispatch(clearWorkoutData());
     dispatch(clearGoals());
+    dispatch(clearProfileData())
     navigate("/");
   };
 
@@ -35,17 +37,17 @@ const MemberDashboardSidebar = ({ isSidebarOpen }) => {
     >
       <div className="h-full px-3 pb-4 overflow-y-auto">
         <ul className="space-y-2 font-medium">
-          <li className="cursor-pointer">
+          <li className="cursor-pointer" onClick={toggleSideBar}>
             <Link
             to="/member-dashboard"
               className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white 
       hover:bg-gray-200 dark:hover:bg-gray-700"
             >
               <CiCalendar className="mr-2" />
-              <span className="flex-1 me-3 ">Dashboard</span>
+              <span className="flex-1 me-3 ">Home</span>
             </Link>
           </li>
-          <li className="cursor-pointer">
+          <li className="cursor-pointer" onClick={toggleSideBar}>
             <Link
             to="/member-dashboard/membership"
               className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white 
@@ -56,7 +58,7 @@ const MemberDashboardSidebar = ({ isSidebarOpen }) => {
               <span className="flex-1 me-3 ">Membership</span>
             </Link>
           </li>
-          <li className="cursor-pointer">
+          <li className="cursor-pointer" onClick={toggleSideBar}>
             <Link
             to="/member-dashboard/settings"
               className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white 
@@ -67,7 +69,7 @@ const MemberDashboardSidebar = ({ isSidebarOpen }) => {
               <span className="flex-1 me-3 ">Settings</span>
             </Link>
           </li>
-          <li className="cursor-pointer">
+          <li className="cursor-pointer" onClick={toggleSideBar}>
             <a
               onClick={handleLogout}
               className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white 

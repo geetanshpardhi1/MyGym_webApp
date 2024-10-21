@@ -17,6 +17,7 @@ const MemberDashboard = () => {
   };
 
   const toggleSideBar = () => {
+    console.log('helo')
     setIsSidebarOpen(!isSidebarOpen);
   };
 

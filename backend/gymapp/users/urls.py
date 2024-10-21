@@ -1,11 +1,13 @@
 from django.urls import path,include
-from .views import goal_detail_update,RemoveProfilePictureView,MembershipCreateOrUpdateView,MembershipDetailView,CookieTokenRefreshView,user_workout_plans,UserRegistrationView,CustomLoginView,UserChangePasswordView,LogoutAPIView,SendPasswordResetEmailView,UserPasswordResetView,MemberProfileRetrieveUpdateView
+from .views import VerifyOTP,ResendVerificationOTPView,goal_detail_update,RemoveProfilePictureView,MembershipCreateOrUpdateView,MembershipDetailView,CookieTokenRefreshView,user_workout_plans,UserRegistrationView,CustomLoginView,UserChangePasswordView,LogoutAPIView,SendPasswordResetEmailView,UserPasswordResetView,MemberProfileRetrieveUpdateView
 from users.api.api_razorpay import CreateOrderApiView,TransactionApiView
 
 
 
 urlpatterns = [
     path('register/', UserRegistrationView.as_view(), name='user-register'),
+    path('verify/', VerifyOTP.as_view(), name='user-verification'),
+    path('verify/resendOTP/', ResendVerificationOTPView.as_view(), name='resendOTP'),
     path('login/', CustomLoginView.as_view(), name='user-login'),
     path('logout/', LogoutAPIView.as_view(), name='user-logout'),
     path('changepassword/', UserChangePasswordView.as_view(), name='change_password'),

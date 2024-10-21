@@ -39,15 +39,15 @@ const User = () => {
       </div>
       <div className="flex flex-row items-center justify-between p-5 dark:text-gray-400">
         <div className="flex flex-col items-center justify-center 0">
-          <h2 className="font-bold ">{profile.weight ? `${profile.weight} Kg`: 'N/A' }</h2>
+          <h2 className="font-bold ">{profile.weight ? `${profile.weight} Kg`: '--' }</h2>
           <p>Weight</p>
         </div>
         <div className="flex flex-col items-center justify-center">
-          <h2 className="font-bold ">{profile.height ? `${profile.height} Cm`: 'N/A' }</h2>
+          <h2 className="font-bold ">{profile.height ? `${profile.height} Cm`: '--' }</h2>
           <p>Height</p>
         </div>
         <div className="flex flex-col items-center justify-center">
-          <h2 className="font-bold ">{age !== null ? `${age} yrs` : 'N/A'}</h2>
+          <h2 className="font-bold ">{age !== null ? `${age} yrs` : '--'}</h2>
           <p>Age</p>
         </div>
       </div>

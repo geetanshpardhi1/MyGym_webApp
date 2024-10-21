@@ -41,6 +41,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_member = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
+    otp = models.CharField(max_length=6,null=True,blank=True)
 
     objects = UserManager()
 
