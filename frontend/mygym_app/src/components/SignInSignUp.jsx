@@ -41,7 +41,7 @@ const SignInSignUp = () => {
   // }, [registerError]);
   useEffect(() => {
     if (OTPsent) {
-      const timer = setTimeout(() => setOTPsent(""), 10000);
+      const timer = setTimeout(() => setOTPsent(""), 5000);
       return () => clearTimeout(timer);
     }
   }, [OTPsent]);
@@ -74,6 +74,29 @@ const SignInSignUp = () => {
   const [otp, setOTP] = useState("");
   const [resetEmail, setResetEmail] = useState("");
   const accessToken = useSelector((state) => state.auth.accessToken);
+  const [resendDisabled, setResendDisabled] = useState(true);
+  const [timer, setTimer] = useState(30);
+
+  useEffect(() => {
+    if (resendDisabled) {
+      const countdown = setInterval(() => {
+        setTimer((prev) => {
+          if (prev === 1) {
+            clearInterval(countdown);
+            setResendDisabled(false);
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+  }, [resendDisabled]);
+
+  const handleResend = () => {
+    setResendDisabled(true);
+    setTimer(30);
+    resendOTPVerification();
+    setOTPsent("OTP sent successfully.");
+  };
 
   // LOGIN
   const handleLogin = async (e) => {
@@ -207,9 +230,8 @@ const SignInSignUp = () => {
     setLoading(true);
     setErrorMessage("");
     setOTPFORM(true);
-    
+
     try {
-      
       const response = await api.post(
         "/users/verify/",
         {
@@ -223,7 +245,7 @@ const SignInSignUp = () => {
           user: response.data.user,
         })
       );
-      
+
       if (response.data.user.is_verified == true) {
         navigate("/member-dashboard");
       } else if (response.data.user.is_verified != true) {
@@ -232,7 +254,7 @@ const SignInSignUp = () => {
         console.log("is a trainer");
       }
     } catch (err) {
-      setErrorMessage(err.response.data.mssg)
+      setErrorMessage(err.response.data.mssg);
       console.error(err.response.data.mssg);
     } finally {
       setLoading(false);
@@ -245,7 +267,6 @@ const SignInSignUp = () => {
     setLoading(true);
     setErrorMessage("");
     setOTPFORM(true);
-    setOTPsent("OTP sent successfully.");
     try {
       const response = await api.post(
         "/users/verify/",
@@ -268,9 +289,9 @@ const SignInSignUp = () => {
         console.log("INVALID OTP");
       } else {
         setErrorMessage("INVALID OTP");
-        console.log("INVALID OTP");
       }
     } catch (err) {
+      setErrorMessage("INVALID OTP");
       console.error("is a trainer");
     } finally {
       setLoading(false);
@@ -280,7 +301,6 @@ const SignInSignUp = () => {
   //VerificationOTPresend
   const resendOTPVerification = async (e) => {
     setLoading(true);
-    e.preventDefault();
     try {
       const response = await api.post(
         "/users/verify/resendOTP/",
@@ -423,7 +443,7 @@ const SignInSignUp = () => {
                       <h2 className={styles.title}>OTP VERIFICATION</h2>
                       <ErrorMessage errorMessage={errorMessage}></ErrorMessage>
                       <div className={styles["input-field"]}>
-                        <i class="fa fa-user"></i>
+                        <i className="fa fa-user"></i>
 
                         <input
                           required
@@ -451,7 +471,6 @@ const SignInSignUp = () => {
                       onSubmit={handleReVerification}
                     >
                       <h2 className={styles.title}>OTP VERIFICATION</h2>
-
                       {OTPsent && (
                         <div
                           className="bg-green-100 border border-green-400 text-green-600 px-4 py-3 rounded relative"
@@ -461,27 +480,41 @@ const SignInSignUp = () => {
                         </div>
                       )}
                       <ErrorMessage errorMessage={errorMessage}></ErrorMessage>
-
                       <div className={styles["input-field"]}>
-                        <i class="fa fa-key"></i>
-                        {loading ? (
-                          <Loading />
+                        <i className="fa fa-key"></i>
+
+                        <input
+                          required
+                          type="text"
+                          placeholder="Enter The OTP"
+                          value={otp}
+                          onChange={(e) => setOTP(e.target.value)}
+                        />
+                      </div>
+                      {loading ? (
+                        <Loading />
+                      ) : (
+                        <input
+                          type="submit"
+                          className={styles.btn}
+                          value="Verify"
+                        />
+                      )}
+                      //resend otp button
+                      <div className={styles["resend-container"]}>
+                        {resendDisabled ? (
+                          <span className="text-gray-400 cursor-not-allowed">
+                            Resend OTP in {timer}s
+                          </span>
                         ) : (
-                          <input
-                            required
-                            type="text"
-                            placeholder="Enter The OTP"
-                            value={otp}
-                            onChange={(e) => setOTP(e.target.value)}
-                          />
+                          <span
+                            className="text-blue-600 cursor-pointer"
+                            onClick={handleResend}
+                          >
+                            Resend OTP
+                          </span>
                         )}
                       </div>
-
-                      <input
-                        type="submit"
-                        className={styles.btn}
-                        value="Verify"
-                      />
                     </form>
                   )}
                 </>
@@ -515,15 +548,16 @@ const SignInSignUp = () => {
                   onChange={(e) => setResetEmail(e.target.value)}
                 />
               </div>
-              {loading?
-              <Loading />:(
+              {loading ? (
+                <Loading />
+              ) : (
                 <input
-                type="submit"
-                value="Confirm"
-                className={`${styles.btn} ${styles.solid}`}
-              />
+                  type="submit"
+                  value="Confirm"
+                  className={`${styles.btn} ${styles.solid}`}
+                />
               )}
-              
+
               <button
                 type="button"
                 className="text-black-500 cursor-pointer transition duration-300 ease-in-out hover:text-blue-700 hover:glow hover:shadow-blue-500/50"
@@ -571,7 +605,9 @@ const SignInSignUp = () => {
                   type="text"
                   placeholder="Email"
                   value={email}
-                  onChange={(e) => setEmailOnly(e.target.value)}
+                  onChange={(e) => {
+                    setEmailOnly(e.target.value), setOTPEmail(e.target.value);
+                  }}
                 />
               </div>
               <div className={styles["input-field"]}>
@@ -668,7 +704,7 @@ const SignInSignUp = () => {
               <ErrorMessage errorMessage={errorMessage}></ErrorMessage>
 
               <div className={styles["input-field"]}>
-                <i class="fa fa-key"></i>
+                <i className="fa fa-key"></i>
                 <input
                   required
                   type="text"
@@ -682,6 +718,21 @@ const SignInSignUp = () => {
               ) : (
                 <input type="submit" className={styles.btn} value="Verify" />
               )}
+
+              <div className={styles["resend-container"]}>
+                {resendDisabled ? (
+                  <span className="text-gray-400 cursor-not-allowed">
+                    Resend OTP in {timer}s
+                  </span>
+                ) : (
+                  <span
+                    className="text-blue-600 cursor-pointer"
+                    onClick={handleResend}
+                  >
+                    Resend OTP
+                  </span>
+                )}
+              </div>
             </form>
           )}
         </div>
