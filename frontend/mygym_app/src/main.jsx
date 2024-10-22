@@ -11,6 +11,7 @@ import PrivateRoutes from "./utils/ProtectedRoutes.jsx";
 import DashboardContent from "./components/member-dashboard/DashboardContent/DashboardContent.jsx";
 import Settings from "./components/member-dashboard/Settings/Settings.jsx";
 import MembershipCard from "./components/member-dashboard/Membership/MembershipCard.jsx";
+import ResetPasswordPage from "./components/ResetPasswordPage.jsx";
 
 
 const router = createBrowserRouter([
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/login-register", element: <SignInSignUp /> },
+      
     ],
   },
   {
@@ -36,6 +38,10 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: "/api/user/reset-password/:userId/:token", //password reset path
+    element: <ResetPasswordPage />,
   },
 ]);
 
