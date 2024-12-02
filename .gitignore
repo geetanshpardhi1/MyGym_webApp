@@ -1,3 +1,3 @@
 *.env
 /frontend/mygym_app/node_modules
-/backend/gymapp/media
+/backend/gymapp/media/*
