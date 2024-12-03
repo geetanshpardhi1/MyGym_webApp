@@ -1,4 +1,4 @@
 *.env
 /frontend/mygym_app/node_modules
 /backend/gymapp/media
-/backend/gymapp/gymapp/__pycache__
+backend/gymapp/gymapp/__pycache__
