@@ -102,8 +102,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'fitzone',
         'USER':'geetansh',
-        'PASSWORD': 'geetansh75520123',
-        'HOST':'mygym-dbinstance.cp2kekaycovx.ap-south-1.rds.amazonaws.com',
+        'PASSWORD': os.getenv('PASSWORD'),
+        'HOST': os.getenv('HOST'),
         'PORT':'3306'
     }
 }
