@@ -84,22 +84,30 @@ WSGI_APPLICATION = 'gymapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
+'''Local database configs'''
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'fitzone',
+#         'USER':'root',
+#         'PASSWORD': 'geetansh75520123',
+#         'HOST':'127.0.0.1',
+#         'PORT':'3306'
 #     }
 # }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'fitzone',
-        'USER':'root',
+        'USER':'geetansh',
         'PASSWORD': 'geetansh75520123',
-        'HOST':'127.0.0.1',
+        'HOST':'mygym-dbinstance.cp2kekaycovx.ap-south-1.rds.amazonaws.com',
         'PORT':'3306'
     }
 }
+
 
 
 # Password validation
