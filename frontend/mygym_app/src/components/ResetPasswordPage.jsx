@@ -27,7 +27,7 @@ const ResetPasswordPage = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        `http://127.0.0.1:8000/users/reset-password/${userId}/${token}/`,
+        `http://13.200.155.3/users/reset-password/${userId}/${token}/`,
         {
           password,
           password2,

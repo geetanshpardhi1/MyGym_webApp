@@ -3,7 +3,7 @@ import { logout, setCredentials } from "../store/features/authSlice";
 import store from "../store/store";
 
 const api = axios.create({
-  baseURL: "http://localhost:8000/",
+  baseURL: "http://13.200.155.3/",
   withCredentials: true,
 });
 
@@ -47,8 +47,8 @@ api.interceptors.response.use(
       error.response.data.error === "Invalid token"
     ) {
       originalRequest._retry = true;
-      dispatch(logout()); 
-      return Promise.reject(error); 
+      dispatch(logout());
+      return Promise.reject(error);
     }
 
     if (error.response.status === 401 && !originalRequest._retry) {

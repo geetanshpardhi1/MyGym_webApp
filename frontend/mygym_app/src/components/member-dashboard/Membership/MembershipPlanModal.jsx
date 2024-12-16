@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRazorpay } from "react-razorpay";
 import { useDispatch, useSelector } from "react-redux";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
-import 'swiper/swiper-bundle.css';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/swiper-bundle.css";
 import { setMembershipDetails } from "../../../store/features/membershipSlice";
 
 const MembershipPlanModal = ({
@@ -49,7 +49,7 @@ const MembershipPlanModal = ({
 
   const completeOrder = (paymentID, orderID, signature, amount, plan) => {
     axios
-      .post("http://127.0.0.1:8000/users/order/complete/", {
+      .post("http://13.200.155.3/users/order/complete/", {
         payment_id: paymentID,
         order_id: orderID,
         signature: signature,
@@ -74,15 +74,11 @@ const MembershipPlanModal = ({
     };
 
     axios
-      .post(
-        "http://127.0.0.1:8000/users/membership/create",
-        membershipPayload,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
+      .post("http://13.200.155.3/users/membership/create", membershipPayload, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
       .then((response) => {
         dispatch(setMembershipDetails(response.data));
         closeModal();
@@ -97,7 +93,7 @@ const MembershipPlanModal = ({
     const amount = amountMapping[plan][duration];
 
     axios
-      .post("http://127.0.0.1:8000/users/order/create/", {
+      .post("http://13.200.155.3/users/order/create/", {
         amount: amount, // in paise
         currency: "INR",
       })
@@ -156,7 +152,6 @@ const MembershipPlanModal = ({
           navigation
           spaceBetween={50}
           slidesPerView={1}
-          
         >
           {/* Base Plan */}
           <SwiperSlide className="pb-10">
@@ -209,7 +204,8 @@ const MembershipPlanModal = ({
             <div className="border p-4 rounded-md text-center dark:border-gray-600">
               <h3 className="text-lg font-bold">Premium Plan</h3>
               <p>
-                Price: Rs {amountMapping.Premium[selectedDuration.Premium] / 100}
+                Price: Rs{" "}
+                {amountMapping.Premium[selectedDuration.Premium] / 100}
               </p>
               <select
                 value={selectedDuration.Premium}

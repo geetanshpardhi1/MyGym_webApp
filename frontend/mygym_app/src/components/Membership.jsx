@@ -5,8 +5,6 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 const Membership = () => {
-  
-
   useEffect(() => {
     const scrollRevealOptions = {
       distance: "50px",
@@ -30,18 +28,18 @@ const Membership = () => {
 
   // const handleBuyNow = async (membershipType) => {
   //   const payload = {
-  //     username,      //username is mandatory not user email 
+  //     username,      //username is mandatory not user email
   //     membership_type: membershipType,
   //     duration: "Monthly",
   //   };
 
   //   try {
   //     const response = await axios.post(
-  //       "http://127.0.0.1:8000/users/create-membership/",
+  //       "http://13.200.155.3/users/create-membership/",
   //       payload,
   //       {
   //         headers: {
-  //           Authorization: `Bearer ${accessToken}`, 
+  //           Authorization: `Bearer ${accessToken}`,
   //           "Content-Type": "application/json",
   //         },
   //       }
@@ -104,7 +102,7 @@ const Membership = () => {
             </h3>
             <button
               className={`${styles.btn} ${styles.btn__primary}`}
-              onClick={()=>handleBuyNow('Base')}
+              onClick={() => handleBuyNow("Base")}
             >
               BUY NOW
             </button>
@@ -154,7 +152,7 @@ const Membership = () => {
             </h3>
             <button
               className={`${styles.btn} ${styles.btn__primary}`}
-              onClick={()=>handleBuyNow('Premium')}
+              onClick={() => handleBuyNow("Premium")}
             >
               BUY NOW
             </button>
@@ -204,7 +202,7 @@ const Membership = () => {
             </h3>
             <button
               className={`${styles.btn} ${styles.btn__primary}`}
-              onClick={()=>handleBuyNow('Gold')}
+              onClick={() => handleBuyNow("Gold")}
             >
               BUY NOW
             </button>
