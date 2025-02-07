@@ -1,6 +1,7 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules'
+import "../App.css";
 import styles from "../styles/Client.module.css"
 import client1 from "../assets/client-1.jpg";
 import client2 from "../assets/client-2.jpg";
@@ -24,8 +25,7 @@ const Clients = () => {
               <i className="ri-double-quotes-r"></i>
             </div>
             <p>
-              I've been a member at FitPhysique for over a year now, and I
-              couldn't be happier with my experience. The range of classes
+              I've been a member at FitPhysique for over a year now. The range of classes
               offered here is impressive - from high-energy cardio sessions to
               relaxing yoga classes, there's something for everyone.
             </p>

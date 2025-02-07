@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import logo from "../assets/logo.png";
 import styles from "../styles/Header.module.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -12,12 +13,10 @@ const Header = () => {
     setMenuOpen(!menuOpen);
   };
 
-
   useEffect(() => {
     setMenuOpen(false);
   }, [location]);
 
-  
   useEffect(() => {
     const handleClickOutsideOrScroll = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -25,12 +24,12 @@ const Header = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutsideOrScroll);
-    document.addEventListener('scroll', handleClickOutsideOrScroll);
+    document.addEventListener("mousedown", handleClickOutsideOrScroll);
+    document.addEventListener("scroll", handleClickOutsideOrScroll);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutsideOrScroll);
-      document.removeEventListener('scroll', handleClickOutsideOrScroll);
+      document.removeEventListener("mousedown", handleClickOutsideOrScroll);
+      document.removeEventListener("scroll", handleClickOutsideOrScroll);
     };
   }, []);
 
@@ -39,9 +38,9 @@ const Header = () => {
       <div className={styles.nav__bar}>
         <div className={styles.nav__header}>
           <div className={styles.nav__logo}>
-            <Link to="/">
+            <RouterLink to="/">
               <img className={styles.logo} src={logo} alt="logo" />
-            </Link>
+            </RouterLink>
           </div>
           <div
             className={styles.nav__menu__btn}
@@ -57,19 +56,25 @@ const Header = () => {
           ref={menuRef}
         >
           <li>
-            <Link to="/">HOME</Link>
+            <RouterLink to="/">HOME</RouterLink>
           </li>
           <li>
-            <Link to="#about">ABOUT</Link>
+            <ScrollLink to="about" smooth={true} duration={500} offset={-70} className="cursor-pointer">
+              ABOUT
+            </ScrollLink>
           </li>
           <li>
-            <Link to="#">CLIENT</Link>
+            <ScrollLink to="clients" smooth={true} duration={500} offset={-70} className="cursor-pointer">
+              CLIENT
+            </ScrollLink>
           </li>
           <li>
-            <Link to="#c">CONTACT US</Link>
+            <ScrollLink to="contact" smooth={true} duration={500} offset={-70} className="cursor-pointer">
+              CONTACT US
+            </ScrollLink>
           </li>
           <li>
-            <Link to="/login-register">LOGIN</Link>
+            <RouterLink to="/login-register">LOGIN</RouterLink>
           </li>
         </ul>
       </div>

@@ -1,0 +1,72 @@
+/* Overlay for background blur */
+.modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4); /* Dark overlay */
+  backdrop-filter: blur(8px); /* Soft background blur */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+/* Main modal */
+.modal {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px); /* Glass effect */
+  padding: 24px;
+  width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transform: scale(0.9);
+  animation: popupFadeIn 0.3s ease-in-out forwards;
+}
+
+/* Close button */
+.close__btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: white;
+  transition: color 0.2s;
+}
+
+.close__btn:hover {
+  color: #ff4d4d;
+}
+
+/* Title */
+.modal__title {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 12px;
+}
+
+/* Content */
+.modal__content {
+  font-size: 16px;
+  color: white;
+  opacity: 0.9;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popupFadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}

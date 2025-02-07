@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap");
 
 :root {
-  --primary-color: #dc030a;
+  --primary-color: #ea0a0a;
   --primary-color-dark: rgb(135, 6, 12);
   --text-dark: #0a0a0a;
   --text-light: #737373;
@@ -69,11 +69,21 @@
   color: var(--text-dark);
 }
 
-.swiper-pagination-bullet {
-  height: 12px;
-  width: 12px;
+.swiper {
+  padding-bottom: 50px !important; /* Adjust this value if needed */
 }
 
-.swiper-pagination-bullet-active {
-  background-color: var(--primary-color);
+/* Ensure all pagination bullets are red */
+.swiper-pagination-bullet {
+  background-color: var(--primary-color) !important;
+  opacity: 0.5 !important; /* Dim inactive dots */
 }
+
+/* Make active dot fully visible */
+.swiper-pagination-bullet-active {
+  background-color: var(--primary-color) !important;
+  opacity: 1 !important;
+}
+
+
+

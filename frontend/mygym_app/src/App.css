@@ -34,4 +34,14 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+/* Ensure all pagination bullets are red */
+.swiper-pagination-bullet {
+  background-color: var(--primary-color) !important;
+  opacity: 0.5 !important; /* Dim inactive dots */
+}
 
+/* Make active dot fully visible */
+.swiper-pagination-bullet-active {
+  background-color: var(--primary-color) !important;
+  opacity: 1 !important;
+}
