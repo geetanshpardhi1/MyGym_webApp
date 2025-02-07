@@ -49,7 +49,7 @@ const LeadMagnetPopup = ({ onClose }) => {
   return (
     <div
       id="popup-overlay"
-      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50 px-6"
+      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50 px-6 backdrop-blur-sm"
     >
       <div className="bg-black text-white rounded-lg p-6 max-w-lg w-full sm:max-w-[90%] sm:w-auto sm:p-4 shadow-lg relative">
         <button
