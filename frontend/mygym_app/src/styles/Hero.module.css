@@ -165,7 +165,7 @@
 
 @media (max-width: 480px) {
   .close__btn {
-    top: 12vh;
+    top: 5vh;
     width: 35px;
     height: 35px;
     font-size: 16px;
