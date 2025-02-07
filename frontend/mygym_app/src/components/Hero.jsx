@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react';
-import ScrollReveal from 'scrollreveal';
-import styles from '../styles/Hero.module.css';
+import React, { useEffect, useState } from "react";
+import ScrollReveal from "scrollreveal";
+import styles from "../styles/Hero.module.css";
+import CalendlyWidget from "./Calendly/CalendlyWidget";
+
 
 const Hero = () => {
+  const [showCalendly, setShowCalendly] = useState(false); // State to toggle Calendly popup
+
   useEffect(() => {
     const scrollRevealOptions = {
-      distance: '50px',
-      origin: 'bottom',
+      distance: "50px",
+      origin: "bottom",
       duration: 1000,
     };
     ScrollReveal().reveal(`.${styles.header__content} h1`, scrollRevealOptions);
@@ -30,14 +34,30 @@ const Hero = () => {
         <div className={styles.header__content}>
           <h1>HARD WORK</h1>
           <h2>IS FOR EVERY SUCCESS</h2>
-          <p>Start by taking inspirations, continue it to give inspirations</p>
+          <p>Start by taking inspiration, continue it to give inspiration</p>
           <div className="header__btn">
-            <button className={`${styles.btn} ${styles.btn__primary}`}>GET STARTED</button>
+            <button
+              className={`${styles.btn} ${styles.btn__primary}`}
+              onClick={() => setShowCalendly(true)} // Show Calendly on button click
+            >
+              Book a Gym Tour
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Show Calendly widget as a popup */}
+      {showCalendly && (
+        <div className={styles.calendly__popup}>
+          <div className={styles.calendly__overlay} onClick={() => setShowCalendly(false)}></div>
+          <div className={styles.calendly__modal}>
+            <button className={styles.close__btn} onClick={() => setShowCalendly(false)}>✖</button>
+            <CalendlyWidget />
+          </div>
+        </div>
+      )}
     </header>
   );
-}
+};
 
 export default Hero;
