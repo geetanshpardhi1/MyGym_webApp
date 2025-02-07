@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ScrollReveal from "scrollreveal";
 import styles from "../styles/Hero.module.css";
 import CalendlyWidget from "./Calendly/CalendlyWidget";
+import { RxCross2 } from "react-icons/rx";
 
 
 const Hero = () => {
@@ -46,16 +47,22 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Show Calendly widget as a popup */}
+      /* Show Calendly widget as a popup */
       {showCalendly && (
-        <div className={styles.calendly__popup}>
-          <div className={styles.calendly__overlay} onClick={() => setShowCalendly(false)}></div>
-          <div className={styles.calendly__modal}>
-            <button className={styles.close__btn} onClick={() => setShowCalendly(false)}>✖</button>
-            <CalendlyWidget />
-          </div>
-        </div>
-      )}
+  <div className={styles.calendly__popup}>
+    <div className={styles.calendly__overlay} onClick={() => setShowCalendly(false)}></div>
+    
+    {/* Floating Close Button (Centered) */}
+    <button className={styles.close__btn} onClick={() => setShowCalendly(false)}><RxCross2 /></button>
+
+    <div className={styles.calendly__modal}>
+      <CalendlyWidget />
+    </div>
+  </div>
+)}
+
+
+
     </header>
   );
 };
