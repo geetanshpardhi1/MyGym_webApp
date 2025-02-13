@@ -26,33 +26,33 @@ const About = () => {
       id="about"
     >
       <div className={styles.about__header}>
-        <h2 className={styles.section__header}>ABOUT US</h2>
+        <h2 className={styles.section__header}>About House of Gains</h2>
         <p className={styles.section__description}>
-          Our mission is to inspire and support individuals in achieving their
-          health and wellness goals, regardless of their fitness level or
-          background.
+          Welcome to House of Gains, the best gym in Indore. Our mission is to provide 
+          a fitness experience that helps you push limits, build strength, and achieve 
+          your health goals with expert guidance and world-class facilities.
         </p>
       </div>
       <div className={styles.about__grid}>
         <div className={styles.about__card}>
-          <h4>WINNER COACHES</h4>
+          <h4>🏆 Expert Trainers & Personalized Coaching</h4>
           <p>
-            We pride ourselves on having a team of dedicated and experienced
-            coaches who are committed to helping you succeed.
+            Our certified fitness professionals are dedicated to helping you get stronger, 
+            lose weight, or build muscle through personalized workout plans and expert advice.
           </p>
         </div>
         <div className={styles.about__card}>
-          <h4>AFFORDABLE PRICE</h4>
+          <h4>💰 Affordable Membership Plans</h4>
           <p>
-            We believe that everyone should have access to high-quality fitness
-            facilities without breaking the bank.
+            We believe fitness should be accessible to everyone. House of Gains offers budget-friendly 
+            membership options with top-tier training, making it the best gym in Indore for fitness lovers.
           </p>
         </div>
         <div className={styles.about__card}>
-          <h4>MODERN EQUIPMENTS</h4>
+          <h4>💪 Advanced Equipment & Facilities</h4>
           <p>
-            Stay ahead of the curve with our state-of-the-art equipment designed
-            to elevate your workout experience.
+            Train with modern gym equipment, dedicated workout zones, and an energizing atmosphere 
+            designed to keep you motivated and help you achieve maximum results.
           </p>
         </div>
       </div>

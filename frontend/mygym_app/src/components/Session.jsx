@@ -3,14 +3,14 @@ import styles from "../styles/Session.module.css";
 import Popup from "./Popup"; // Import the new Popup component
 
 const sessionData = {
-  "BODY BUILDING":
-    "Sculpt your physique and build muscle mass with our specialized bodybuilding programs at FitPhysique. Our expert trainers will guide you through proper techniques and personalized plans.",
-  CARDIO:
-    "Elevate your heart rate and boost your endurance with our dynamic cardio workouts at FitPhysique. From high-intensity interval training (HIIT) to steady-state cardio, we've got it all.",
-  FITNESS:
-    "Embrace a holistic approach to fitness with our comprehensive fitness programs at FitPhysique. Our sessions cover strength, flexibility, and functional training to keep you in top shape.",
-  CROSSFIT:
-    "Experience the ultimate full-body workout with our intense CrossFit classes at FitPhysique. Focus on strength, agility, and endurance through constantly varied functional movements.",
+  "BODYBUILDING":
+    "Transform your physique and gain serious muscle at House of Gains, the best gym in Indore. Our expert trainers will craft a personalized bodybuilding plan, ensuring strength, endurance, and peak performance.",
+  "CARDIO TRAINING":
+    "Burn calories, improve heart health, and boost stamina with high-energy cardio workouts. Whether it’s HIIT, treadmill sprints, or endurance training, we’ve got the best cardio routines to keep you moving.",
+  "TOTAL FITNESS":
+    "Achieve a balanced, full-body workout with our functional fitness programs. Combining strength, mobility, and flexibility training, this program is perfect for all fitness levels.",
+  "CROSSFIT":
+    "Push your limits with high-intensity CrossFit workouts. Our classes focus on strength, agility, and endurance using functional movements, making you stronger and more athletic.",
 };
 
 const Session = () => {

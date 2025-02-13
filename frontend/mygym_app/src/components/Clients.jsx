@@ -10,7 +10,7 @@ import client3 from "../assets/client-3.jpg";
 const Clients = () => {
   return (
     <section className={`${styles.section__container} ${styles.client__container}`} id="client">
-      <h2 className={styles.section__header}>OUR TESTIMONIALS</h2>
+      <h2 className={styles.section__header}>WHY WE ARE THE BEST GYM IN INDORE</h2>
       <Swiper
         modules={[Pagination]}
         pagination={{ clickable: true }}
@@ -20,43 +20,40 @@ const Clients = () => {
       >
         <SwiperSlide>
           <div className={styles.client__card}>
-            <img src={client1} alt="client" />
+            <img src={client1} alt="Happy gym member at House of Gains - Best Gym in Indore" />
             <div>
               <i className="ri-double-quotes-r"></i>
             </div>
             <p>
-              I've been a member at FitPhysique for over a year now. The range of classes
-              offered here is impressive - from high-energy cardio sessions to
-              relaxing yoga classes, there's something for everyone.
+              "I've been training at <strong>House of Gains</strong> for over a year, and it's truly the. The trainers are highly skilled, the facilities are top-notch, 
+              and the workout environment keeps me motivated every day!"
             </p>
             <h4>Sarah Johnson</h4>
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className={styles.client__card}>
-            <img src={client2} alt="client" />
+            <img src={client2} alt="Satisfied gym client at House of Gains in Indore" />
             <div>
               <i className="ri-double-quotes-r"></i>
             </div>
             <p>
-              The classes are always well-planned and engaging, and the
-              instructors do an excellent job of keeping us motivated
-              throughout. I'm so grateful to have found such a supportive and
-              inclusive gym.
+              "The fitness programs here are tailored to help you reach your goals. 
+              Whether you're into strength training, CrossFit, or general fitness, 
+              this gym in Indore has it all! I’ve seen amazing results."
             </p>
             <h4>Michael Wong</h4>
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className={styles.client__card}>
-            <img src={client3} alt="client" />
+            <img src={client3} alt="Gym member sharing experience at best fitness center in Indore" />
             <div>
               <i className="ri-double-quotes-r"></i>
             </div>
             <p>
-              I've tried many gyms in the past, but none of them compare to
-              FitPhysique. From the moment I walked through the doors, I felt
-              welcomed and supported by the staff and fellow members alike.
+              "I’ve tried many fitness centers, but nothing compares to <strong>House of Gains</strong>. 
+              From premium equipment to professional trainers, this is hands down the best gym in Indore!"
             </p>
             <h4>Emily Davis</h4>
           </div>

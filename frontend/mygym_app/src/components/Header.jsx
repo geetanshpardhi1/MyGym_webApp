@@ -39,7 +39,7 @@ const Header = () => {
         <div className={styles.nav__header}>
           <div className={styles.nav__logo}>
             <RouterLink to="/">
-              <img className={styles.logo} src={logo} alt="logo" />
+              <img className={styles.logo} src={logo} alt="House of gains" />
             </RouterLink>
           </div>
           <div

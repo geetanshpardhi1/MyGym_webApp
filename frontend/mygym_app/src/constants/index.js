@@ -65,26 +65,6 @@ export const links = [
   },
 ];
 
-export const empolyeesData = [
-  {
-    title: "Calorie Budget",
-    icon: IoIosPerson,
-    count: "2000 " +"Kcal",
-    bgColor: "bg-gray-100",
-  },
-  {
-    title: "On Leave",
-    icon: IoIosEyeOff,
-    count: 15,
-    bgColor: "bg-blue-100",
-  },
-  {
-    title: "New Joinee",
-    icon: IoIosPersonAdd,
-    count: 25,
-    bgColor: "bg-yellow-100",
-  },
-];
 
 export const shortcutLink = [
   {

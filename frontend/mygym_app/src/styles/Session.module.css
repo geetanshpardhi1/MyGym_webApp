@@ -54,10 +54,9 @@ img {
 }
 
 .session__card:nth-child(1) {
-  background-size: contain;
   background-color: #1d1c1c;
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-    url("../assets/session-1.jpg");
+    url("../assets/session-4.jpg");
 }
 
 .session__card:nth-child(2) {

@@ -22,33 +22,6 @@ const Membership = () => {
     });
   }, []);
 
-  // TESTING CODE FOR PURCHASING MEMBERSHIP
-  // const accessToken = useSelector((state) => state.auth.accessToken);
-  // const username = useSelector((state) => state.auth.user.username);
-
-  // const handleBuyNow = async (membershipType) => {
-  //   const payload = {
-  //     username,      //username is mandatory not user email
-  //     membership_type: membershipType,
-  //     duration: "Monthly",
-  //   };
-
-  //   try {
-  //     const response = await axios.post(
-  //       "http://13.200.155.3/users/create-membership/",
-  //       payload,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     console.log("Membership created:", response.data);
-  //   } catch (error) {
-  //     console.error("Error creating membership:", error);
-  //   }
-  // };
 
   return (
     <section className={styles.membership}>
