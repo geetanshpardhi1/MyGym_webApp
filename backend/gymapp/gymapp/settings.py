@@ -86,27 +86,28 @@ WSGI_APPLICATION = 'gymapp.wsgi.application'
 
 
 '''Local database configs'''
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'fitzone',
-#         'USER':'root',
-#         'PASSWORD': 'geetansh75520123',
-#         'HOST':'127.0.0.1',
-#         'PORT':'3306'
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'fitzone',
-        'USER':'geetansh',
-        'PASSWORD': os.getenv('PASSWORD'),
-        'HOST': os.getenv('HOST'),
+        'USER':'root',
+        'PASSWORD': 'geetansh75520123',
+        'HOST':'127.0.0.1',
         'PORT':'3306'
     }
 }
+
+'''AWS RDS config'''
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'fitzone',
+#         'USER':'geetansh',
+#         'PASSWORD': os.getenv('PASSWORD'),
+#         'HOST': os.getenv('HOST'),
+#         'PORT':'3306'
+#     }
+# }
 
 
 

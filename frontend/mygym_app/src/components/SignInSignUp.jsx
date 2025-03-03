@@ -326,9 +326,9 @@ const SignInSignUp = () => {
         try {
           const [workoutResponse, membershipResponse, goalsResponse] =
             await Promise.all([
-              api.get("http://13.200.155.3/users/workout-plans/"),
-              api.get("http://13.200.155.3/users/membership/"),
-              api.get("http://13.200.155.3/users/goals/"),
+              api.get("http://localhost:8000/users/workout-plans/"),
+              api.get("http://localhost:8000/users/membership/"),
+              api.get("http://localhost:8000/users/goals/"),
             ]);
 
           dispatch(setMembershipDetails(membershipResponse.data));

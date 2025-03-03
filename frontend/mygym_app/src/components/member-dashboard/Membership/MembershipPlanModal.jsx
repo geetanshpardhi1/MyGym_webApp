@@ -49,7 +49,7 @@ const MembershipPlanModal = ({
 
   const completeOrder = (paymentID, orderID, signature, amount, plan) => {
     axios
-      .post("http://13.200.155.3/users/order/complete/", {
+      .post("http://localhost:8000/users/order/complete/", {
         payment_id: paymentID,
         order_id: orderID,
         signature: signature,
@@ -74,11 +74,15 @@ const MembershipPlanModal = ({
     };
 
     axios
-      .post("http://13.200.155.3/users/membership/create", membershipPayload, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
+      .post(
+        "http://localhost:8000/users/membership/create",
+        membershipPayload,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
       .then((response) => {
         dispatch(setMembershipDetails(response.data));
         closeModal();
@@ -93,7 +97,7 @@ const MembershipPlanModal = ({
     const amount = amountMapping[plan][duration];
 
     axios
-      .post("http://13.200.155.3/users/order/create/", {
+      .post("http://localhost:8000/users/order/create/", {
         amount: amount, // in paise
         currency: "INR",
       })
